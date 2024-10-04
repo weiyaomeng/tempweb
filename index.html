@@ -9,6 +9,26 @@
     <meta name="author" content="Weiyao Meng">
     <title>Chatbot Demo</title>
     <style>
+        main {
+        display: flex;
+        justify-content: space-between; /* Adds space between columns */
+        gap: 20px; /* Adds space between sections */
+        padding: 20px;
+    }
+
+    /* Make each section take up equal space */
+    section {
+        flex: 1; /* Each section takes equal space */
+        padding: 10px;
+        border: 1px solid #ddd; /* Optional: Add a border for better visualization */
+    }
+
+    /* Optional: Add some responsiveness */
+    @media (max-width: 768px) {
+        main {
+            flex-direction: column; /* Stack vertically on smaller screens */
+        }
+    }
         body, html {
             font-family: Arial, sans-serif;
             text-align: center;
@@ -135,7 +155,7 @@
     </header>
 
     <main>
-        <section id="combined">
+        <!-- <section id="combined"> -->
             <!-- <h2>TBW-NLAF Bot</h2> -->
 
 
@@ -146,7 +166,7 @@
 
             <!-- Participate in our <a href="https://www.mentimeter.com/app/presentation/n/alm7d96tu2rsij526cm3k7w4xsrfpro6/present?question=1oco4czsqta3" target="_blank" aria-label="Join the Menti">Menti</a> survey.
             <iframe src="https://www.menti.com/al6ejbwvhnbe" style="width: 100%; height: 80vh; border: none;" title="Important Food Topics"></iframe> -->
-        </section>
+        <!-- </section> -->
 
         <section id="tbw">
             
