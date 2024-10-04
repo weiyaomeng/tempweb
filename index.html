@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Chatbot demo">
+    <meta name="keywords" content=" ">
+    <meta name="author" content="Weiyao Meng">
+    <title>Chatbot Demo</title>
+    <style>
+        body, html {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden; /* Prevent horizontal scrolling */
+        }
+
+        nav {
+            background-color: #333;
+            color: white;
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 10px 0;
+        }
+
+        nav a {
+            color: white;
+            padding: 10px;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        nav a:hover {
+            background-color: #555;
+        }
+
+        .flex-container, .center-container {
+            padding: 20px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .flex-item, .center-container > div {
+            margin: 10px;
+        }
+
+        .flex-item img, iframe {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+        }
+
+        h3 a, h4 a {
+            color: inherit;  /* Inherits the color from the parent element */
+            text-decoration: none;  /* No underline by default */
+        }
+
+        h3 a:hover, h4 a:hover {
+            text-decoration: underline;  /* Underline on hover for better interactivity */
+        }
+
+        .embed-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .flourish-embed {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        footer {
+            padding: 20px;
+            background-color: #f1f1f1;
+            text-align: center;
+        }
+
+        footer small {
+            font-size: 0.8em;
+            color: #555;
+        }
+
+        @media (max-width: 767px) {
+            nav {
+                flex-direction: column; /* Stack navbar items vertically */
+            }
+
+            .flex-container, .center-container {
+                flex-direction: column;
+            }
+
+            .flourish-embed {
+                max-width: 100%;
+            }
+        }
+
+        .footer-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .qr-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .qr-item img {
+            max-width: 100px; /* Adjust size for a footnote-like appearance */
+            height: auto;
+        }
+    </style>
+    <script>
+        window.codySettings = { widget_id: '9d22e0ff-09ef-4c68-8998-31632f639f2f' };
+        
+        !function(){var t=window,e=document,a=function(){var t=e.createElement("script");t.type="text/javascript",t.async=!0,t.src="https://trinketsofcody.com/cody-widget.js";var a=e.getElementsByTagName("script")[0];a.parentNode.insertBefore(t,a)};"complete"===document.readyState?a():t.attachEvent?t.attachEvent("onload",a):t.addEventListener("load",a,!1)}();
+        </script>
+</head>
+<body>
+    <nav id="navbar">
+        <!-- <a href="#tbw" aria-label="Think Better World section">Think Better Bot</a> -->
+        <a href="tbw-bot.html" aria-label="Think Better World section">Think Better Bot</a>
+        <a href="nlaf-bot.html" aria-label="NLAF section">NLAF Bot</a>
+        <a href="index.html" aria-label="TBW-NLAF section">TBW-NLAF Bot</a>
+    </nav>
+
+    <header>
+        <h1>Chatbot Demo</h1>
+    </header>
+
+    <main>
+        <section id="combined">
+            <h2>TBW-NLAF Bot</h2>
+
+
+            <!-- <iframe src="https://embed.cody.bot/9d22e0ff-09ef-4c68-8998-31632f639f2f" 
+            style="border:0px; width: 90vh; height: 60vh;"
+             name="codyai" scrolling="no" 
+            frameborder="1" marginheight="0" marginwidth="0" allowfullscreen></iframe> -->
+
+            <!-- Participate in our <a href="https://www.mentimeter.com/app/presentation/n/alm7d96tu2rsij526cm3k7w4xsrfpro6/present?question=1oco4czsqta3" target="_blank" aria-label="Join the Menti">Menti</a> survey.
+            <iframe src="https://www.menti.com/al6ejbwvhnbe" style="width: 100%; height: 80vh; border: none;" title="Important Food Topics"></iframe> -->
+        </section>
+
+        <section id="tbw">
+            
+            <h2>Think Better Bot</h2>
+            <!-- <div class="embed-container">
+                <div class="flourish-embed" data-src="story/2482399">
+                    <script src="https://public.flourish.studio/resources/embed.js"></script>
+                </div>
+            </div> -->
+            <!-- <div class="embed-container">
+                <div class="flourish-embed" data-src="story/2482260">
+                    <script src="https://public.flourish.studio/resources/embed.js"></script>
+                </div> -->
+            </div>
+        </section>
+
+        <section id="NLAF">
+            <h2>NLAF Bot</h2>
+            <!-- <iframe src="https://embed.cody.bot/9d29f830-71d6-4176-baef-f74eb4333b06" style="border:0px;height:600px;width:400" name="codyai" scrolling="no" frameborder="1" marginheight="0" marginwidth="0" allowfullscreen></iframe> -->
+
+            <!-- <div class="flourish-embed" data-src="story/2482376">
+                <script src="https://public.flourish.studio/resources/embed.js"></script>
+            </div> -->
+        </section>
+    </main>
+
+    <footer class="footer-container">
+        <p>
+            For demonstration purpose only.
+        </p>
+        <!-- <div class="qr-item">
+            <img src="assets/qr code/TBW LinkedIn QR Code.png" alt="linkedin tbw">
+            <small>Join us on <a href="https://www.linkedin.com/showcase/think-better-world/" target="_blank" aria-label="Join us on LinkedIn">LinkedIn</a> for updates.</small>
+        </div>
+        <p>
+            Visit our <a href="http://www.thinkbetterworld.com/" target="_blank" aria-label="Think Better World Alliance Website">Think Better World Alliance Website</a> to get involved.
+        </p>
+        <p>
+            <small>Visualisation template courtesy of <a href="https://flourish.studio" target="_blank" aria-label="Flourish Studio">Flourish</a> (https://flourish.studio)</small>
+        </p> -->
+    </footer>
+</body>
+</html>
