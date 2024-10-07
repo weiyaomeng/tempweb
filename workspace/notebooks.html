@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Chatbot demo">
+    <meta name="keywords" content=" ">
+    <meta name="author" content="Weiyao Meng">
+    <link rel="SHORTCUT ICON" href="https://www.nlaf.uk/Library/images/icons/links/favicon.png"></link>
+
+    <title>NLAF Knowledge Studio</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge;chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="The independent, collaborative news and information source for farming and food" />
+    <meta name="keywords" content="NLAF, Food and Farming Futures, OpenFields, landbased, library, open-access, research, open learning, technology transfer, knowledge exchange" />
+    <meta name="author" content="Food and Farming Futures">
+    <meta http-equiv="refresh" content="4800" >
+    <meta name="keywords" content="LucideaKMPresto">
+
+    <link id="inmPrestoTheme" rel="stylesheet" href="https://www.nlaf.uk/Library/styles/scss/themes/National_Library_for_AgriFood_Draft_5/theme_04252024_111100.css" type="text/css" />
+    <link type="text/css" href="https://www.nlaf.uk/Library/styles/css/presto.min.css?v=5.5.0.152" rel="stylesheet"  />
+    <style id="inmPrestoAppCssOverrides"></style>
+    <script type="text/javascript" id="inmPrestoScripts" src="https://www.nlaf.uk/Library/jscript/presto.min.js?v=5.5.0.152" data-ver="5.5.0.152"></script>
+    <script type="text/javascript" src="https://www.nlaf.uk/Library/jscript/CustomCommonScripts.js?v=5.5.0.152"></script>
+    <script language="javascript" src='https://www.nlaf.uk/Library/help/RoboHelp_CSH.js?v=5.5.0.152' type="text/javascript"></script>
+    <script>
+        window.codySettings = { widget_id: '9d29f830-71d6-4176-baef-f74eb4333b06' };
+        
+        !function(){var t=window,e=document,a=function(){var t=e.createElement("script");t.type="text/javascript",t.async=!0,t.src="https://trinketsofcody.com/cody-widget.js";var a=e.getElementsByTagName("script")[0];a.parentNode.insertBefore(t,a)};"complete"===document.readyState?a():t.attachEvent?t.attachEvent("onload",a):t.addEventListener("load",a,!1)}();
+        </script>
+    <style>
+        body, html {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden; /* Prevent horizontal scrolling */
+        }
+
+        nav {
+            background-color: #333;
+            color: white;
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 10px 0;
+        }
+
+        nav a {
+            color: white;
+            padding: 10px;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        nav a:hover {
+            background-color: #555;
+        }
+
+        .flex-container, .center-container {
+            padding: 20px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .flex-item, .center-container > div {
+            margin: 10px;
+        }
+
+        .flex-item img, iframe {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+        }
+
+        h3 a, h4 a {
+            color: inherit;  /* Inherits the color from the parent element */
+            text-decoration: none;  /* No underline by default */
+        }
+
+        h3 a:hover, h4 a:hover {
+            text-decoration: underline;  /* Underline on hover for better interactivity */
+        }
+
+        .embed-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .flourish-embed {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        footer {
+            padding: 20px;
+            background-color: #f1f1f1;
+            text-align: center;
+        }
+
+        footer small {
+            font-size: 0.8em;
+            color: #555;
+        }
+
+        @media (max-width: 767px) {
+            nav {
+                flex-direction: column; /* Stack navbar items vertically */
+            }
+
+            .flex-container, .center-container {
+                flex-direction: column;
+            }
+
+            .flourish-embed {
+                max-width: 100%;
+            }
+        }
+
+        .footer-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .qr-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .qr-item img {
+            max-width: 100px; /* Adjust size for a footnote-like appearance */
+            height: auto;
+        }
+
+        /* Added styles for the gallery-style note */
+        .gallery {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 0;
+            flex-wrap: wrap;
+        }
+
+        .note-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            width: 300px;
+            margin: 15px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .note-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .note-card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .note-content {
+            padding: 15px;
+        }
+
+        .note-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin: 0;
+            margin-bottom: 10px;
+        }
+
+        .note-description {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .note-footer {
+            display: flex;
+            justify-content: flex-end;
+            padding: 10px;
+            border-top: 1px solid #eee;
+        }
+
+        .note-footer a {
+            text-decoration: none;
+            color: #007bff;
+            font-weight: bold;
+        }
+
+        .note-footer a:hover {
+            text-decoration: underline;
+        }
+        /* New styles for "Create New" card */
+        .create-new {
+            background-color: #f1f1f1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .create-new-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+        }
+
+        .plus-icon {
+            font-size: 50px;
+            color: #007bff;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .create-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .create-new:hover {
+            background-color: #e0e0e0;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body id="ctl00_ctl00_PageBody" style="width:100%;height:100%;margin:0px; padding:0px;" class="inmg-body home-home">
+
+<body>
+    <nav id="navbar">
+        <!-- Look like research rabbit -->
+        <a href="../research workspace demo.html" >Explore</a> 
+
+        <!-- Look like research rabbit -->
+        <a href="notebooks.html" >Notebooks</a>
+
+        <!-- Look like research rabbit -->
+        <a href="community.html" >Community</a>
+
+        <!-- Back to the NLAF Home page -->
+        <a href="../index.html" aria-label="TBW-NLAF section">Back to Library</a>
+    </nav>
+
+    <header></header>
+
+    <main>
+        <!-- <section id="nlaf"> -->
+            <!-- Input block with form -->
+            <!-- <div class="input-block" style="text-align:center; padding: 20px;">
+                <form action="your-action-url" method="POST"> -->
+                    <!-- Label for the input field -->
+                    <!-- <label for="userInput">Enter your input:</label><br><br> -->
+                    
+                    <!-- Input field for user input -->
+                    <!-- <input type="text" id="userInput" name="userInput" placeholder="Type here..." style="width: 300px; padding: 10px;" required> -->
+                    
+                    <!-- Submit button -->
+                    <!-- <button type="submit" style="padding: 10px 20px; margin-left: 10px;">Enter</button>
+                </form>
+            </div>
+        </section> -->
+
+        <!-- Notion-style gallery section -->
+        <section class="gallery">
+            <div class="note-card">
+                <img src="popularity.png" alt="Note Image">
+                <div class="note-content">
+                    <div class="note-title">Notes: 2024-10-01</div>
+                    <div class="note-description">
+                        Understanding the trends in agri-food research topics.
+                    </div>
+                </div>
+                <div class="note-footer">
+                    <a href="notebooks1.html">Read More</a>
+                </div>
+            </div>
+        
+            <div class="note-card">
+                <img src="topic networks.png" alt="Note Image">
+                <div class="note-content">
+                    <div class="note-title">Notes: 2024-10-05</div>
+                    <div class="note-description">
+                        Exploring the agri-food research topic networks.
+                    </div>
+                </div>
+                <div class="note-footer">
+                    <a href="notebooks2.html">Read More</a>
+                </div>
+            </div>
+
+            <!-- "Create New" Card -->
+            <div class="note-card create-new">
+                <div class="create-new-content">
+                    <div class="plus-icon">+</div>
+                    <div class="create-title"><a href="notebooks_new.html">Create New</a></div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="footer-container">
+        <p>For demonstration purposes only.</p>
+    </footer>
+
+</body>
+</html>
+

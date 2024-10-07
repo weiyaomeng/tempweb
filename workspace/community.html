@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Community page">
+    <meta name="author" content="Weiyao Meng">
+    <link rel="SHORTCUT ICON" href="https://www.nlaf.uk/Library/images/icons/links/favicon.png"></link>
+
+    <title>NLAF Knowledge Studio</title>
+
+    <style>
+        body, html {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        /* Consistent navigation bar style */
+        nav {
+            background-color: #333;
+            color: white;
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 10px 0;
+        }
+
+        nav a {
+            color: white;
+            padding: 10px;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        nav a:hover {
+            background-color: #555;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        .flex-container {
+            display: flex;
+            justify-content: space-evenly;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .module {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 100%;
+            max-width: 400px;
+            box-sizing: border-box;
+            flex: 1;
+        }
+
+        h3 {
+            color: #4CAF50;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        .list-group {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .list-group li {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            margin-bottom: 10px;
+            padding: 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .list-group li:hover {
+            background-color: #e0e0e0;
+        }
+
+        /* Flexbox for horizontal layout of modules */
+        .modules-flex {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px; /* Space between panels */
+        }
+
+        /* Make sure the modules don't get too narrow on larger screens */
+        .module {
+            flex: 1;
+            min-width: 250px; /* Minimum width to avoid being too narrow */
+        }
+
+        footer {
+            padding: 20px;
+            background-color: #333;
+            color: white;
+            text-align: center;
+        }
+
+        /* Responsive design */
+        @media (max-width: 767px) {
+            nav {
+                flex-direction: column;
+            }
+
+            main {
+                padding: 10px;
+            }
+
+            .flex-container,
+            .modules-flex {
+                flex-direction: column;
+            }
+
+            .module {
+                max-width: 100%;
+            }
+        }
+    </style>
+
+    <script>
+        // JavaScript to handle toggling between panels
+        function showModules(communityName) {
+            // Hide the Join and My Communities panels
+            document.getElementById('joinPanel').style.display = 'none';
+            document.getElementById('myPanel').style.display = 'none';
+
+            // Show the modules and update the community title
+            document.getElementById('modulesPanel').style.display = 'flex';
+            document.getElementById('communityTitle').textContent = communityName;
+        }
+    </script>
+</head>
+
+<body id="ctl00_ctl00_PageBody" style="width:100%;height:100%;margin:0px; padding:0px;" class="inmg-body home-home">
+
+    <body>
+        <nav id="navbar">
+            <!-- Look like research rabbit -->
+            <a href="../research workspace demo.html" >Explore</a> 
+    
+            <!-- Look like research rabbit -->
+            <a href="notebooks.html" >Notebooks</a>
+    
+            <!-- Look like research rabbit -->
+            <a href="community.html" >Community</a>
+    
+            <!-- Back to the NLAF Home page -->
+            <a href="../index.html" aria-label="TBW-NLAF section">Back to Library</a>
+        </nav>
+
+    <main>
+        <!-- Join Communities and My Communities displayed horizontally -->
+        <div class="flex-container">
+            <!-- Join Communities Panel -->
+            <section class="module" id="joinPanel">
+                <h3>Join Communities</h3>
+                <p>Explore dynamic communities focused on innovation, sustainability, research, and education in the agri-food sector.</p>
+                <ul class="list-group">
+                    <li><strong>Agri-Innovation & Solutions Network</strong></li>
+                    <li><strong>Sustainable Agri-Food Policy Forum</strong></li>
+                    <li><strong>Agri-Food Research Collaborators</strong></li>
+                    <li><strong>Agri-Education & Knowledge Exchange</strong></li>
+                </ul>
+            </section>
+
+            <!-- My Communities Panel -->
+            <section class="module" id="myPanel">
+                <h3>My Communities</h3>
+                <p>Click on a community to explore its features.</p>
+                <ul class="list-group">
+                    <li onclick="showModules('Agri-Innovation & Solutions Network')"><strong>Agri-Innovation & Solutions Network</strong></li>
+                    <li onclick="showModules('Sustainable Agri-Food Policy Forum')"><strong>Sustainable Agri-Food Policy Forum</strong></li>
+                    <li onclick="showModules('Agri-Food Research Collaborators')"><strong>Agri-Food Research Collaborators</strong></li>
+                </ul>
+            </section>
+        </div>
+
+        <!-- Community Name displayed above the modules -->
+        <h2 id="communityTitle"></h2> <!-- This will show the selected community name -->
+
+        <!-- The Modules Section (hidden by default) -->
+        <section id="modulesPanel" style="display: none;" class="modules-flex">
+            <!-- Research Collection Sharing -->
+            <section class="module">
+                <h3>Share Your Research Collections</h3>
+                <p>Share your personal research collections with the community.</p>
+
+                <div class="form-group">
+                    <label for="collectionTitle">Collection Title</label>
+                    <input type="text" id="collectionTitle" placeholder="Enter collection title" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="collectionDescription">Description</label>
+                    <textarea id="collectionDescription" placeholder="Provide a short description of your research collection" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="shareLink">Collection Link</label>
+                    <input type="url" id="shareLink" placeholder="Paste a link to your research collection" required>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit">Share Collection</button>
+                </div>
+            </section>
+
+            <!-- Discussion Area -->
+            <section class="module">
+                <h3>Discussion Area</h3>
+                <p>Ask questions or start discussions on specific papers.</p>
+
+                <div class="form-group">
+                    <label for="discussionTitle">Discussion Title</label>
+                    <input type="text" id="discussionTitle" placeholder="Enter discussion title" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="discussionContent">Discussion Content</label>
+                    <textarea id="discussionContent" placeholder="Enter your discussion or question" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit">Start Discussion</button>
+                </div>
+            </section>
+
+            <!-- Recommend Papers -->
+            <section class="module">
+                <h3>Recommend Papers</h3>
+                <p>Recommend research papers to other users.</p>
+
+                <div class="form-group">
+                    <label for="paperTitle">Paper Title</label>
+                    <input type="text" id="paperTitle" placeholder="Enter paper title" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="paperLink">Paper Link</label>
+                    <input type="url" id="paperLink" placeholder="Paste a link to the research paper" required>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit">Recommend Paper</button>
+                </div>
+            </section>
+        </section>
+
+    </main>
+
+    <footer class="footer-container">
+        <p>For demonstration purposes only.</p>
+    </footer>
+
+</body>
+</html>

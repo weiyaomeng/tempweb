@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Chatbot demo">
+    <meta name="keywords" content=" ">
+    <meta name="author" content="Weiyao Meng">
+    <link rel="SHORTCUT ICON" href="https://www.nlaf.uk/Library/images/icons/links/favicon.png"></link>
+
+    <title>NLAF Knowledge Studio</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge;chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="The independent, collaborative news and information source for farming and food" />
+    <meta name="keywords" content="NLAF, Food and Farming Futures, OpenFields, landbased, library, open-access, research, open learning, technology transfer, knowledge exchange" />
+    <meta name="author" content="Food and Farming Futures">
+    <meta http-equiv="refresh" content="4800" >
+    <meta name="keywords" content="LucideaKMPresto">
+
+    <link id="inmPrestoTheme" rel="stylesheet" href="https://www.nlaf.uk/Library/styles/scss/themes/National_Library_for_AgriFood_Draft_5/theme_04252024_111100.css" type="text/css" />
+    <link type="text/css" href="https://www.nlaf.uk/Library/styles/css/presto.min.css?v=5.5.0.152" rel="stylesheet"  />
+    <style id="inmPrestoAppCssOverrides"></style>
+    <script type="text/javascript" id="inmPrestoScripts" src="https://www.nlaf.uk/Library/jscript/presto.min.js?v=5.5.0.152" data-ver="5.5.0.152"></script>
+    <script type="text/javascript" src="https://www.nlaf.uk/Library/jscript/CustomCommonScripts.js?v=5.5.0.152"></script>
+    <script language="javascript" src='https://www.nlaf.uk/Library/help/RoboHelp_CSH.js?v=5.5.0.152' type="text/javascript"></script>
+    <script>
+        window.codySettings = { widget_id: '9d29f830-71d6-4176-baef-f74eb4333b06' };
+        
+        !function(){var t=window,e=document,a=function(){var t=e.createElement("script");t.type="text/javascript",t.async=!0,t.src="https://trinketsofcody.com/cody-widget.js";var a=e.getElementsByTagName("script")[0];a.parentNode.insertBefore(t,a)};"complete"===document.readyState?a():t.attachEvent?t.attachEvent("onload",a):t.addEventListener("load",a,!1)}();
+        </script>
+    <style>
+        body, html {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden; /* Prevent horizontal scrolling */
+        }
+
+        nav {
+            background-color: #333;
+            color: white;
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 10px 0;
+        }
+
+        nav a {
+            color: white;
+            padding: 10px;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        nav a:hover {
+            background-color: #555;
+        }
+
+        .flex-container, .center-container {
+            padding: 20px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .flex-item, .center-container > div {
+            margin: 10px;
+        }
+
+        .flex-item img, iframe {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+        }
+
+        h3 a, h4 a {
+            color: inherit;  /* Inherits the color from the parent element */
+            text-decoration: none;  /* No underline by default */
+        }
+
+        h3 a:hover, h4 a:hover {
+            text-decoration: underline;  /* Underline on hover for better interactivity */
+        }
+
+        .embed-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .flourish-embed {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        footer {
+            padding: 20px;
+            background-color: #f1f1f1;
+            text-align: center;
+        }
+
+        footer small {
+            font-size: 0.8em;
+            color: #555;
+        }
+
+        @media (max-width: 767px) {
+            nav {
+                flex-direction: column; /* Stack navbar items vertically */
+            }
+
+            .flex-container, .center-container {
+                flex-direction: column;
+            }
+
+            .flourish-embed {
+                max-width: 100%;
+            }
+        }
+
+        .footer-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .qr-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .qr-item img {
+            max-width: 100px; /* Adjust size for a footnote-like appearance */
+            height: auto;
+        }
+    </style>
+    <script>
+        window.codySettings = { widget_id: '9d29f830-71d6-4176-baef-f74eb4333b06' };
+        
+        !function(){var t=window,e=document,a=function(){var t=e.createElement("script");t.type="text/javascript",t.async=!0,t.src="https://trinketsofcody.com/cody-widget.js";var a=e.getElementsByTagName("script")[0];a.parentNode.insertBefore(t,a)};"complete"===document.readyState?a():t.attachEvent?t.attachEvent("onload",a):t.addEventListener("load",a,!1)}();
+        </script>
+
+</head>
+<body id="ctl00_ctl00_PageBody" style="width:100%;height:100%;margin:0px; padding:0px;" class="inmg-body home-home">
+
+<body>
+    <nav id="navbar">
+        <!-- Look like research rabbit -->
+        <a href="research workspace demo.html" >Explore</a> 
+
+        <!-- Look like research rabbit -->
+        <a href="workspace/notebooks.html" >Notebooks</a>
+
+        <!-- Look like research rabbit -->
+        <a href="workspace/community.html" >Community</a>
+
+        <!-- Back to the NLAF Home page -->
+        <a href="index.html" aria-label="TBW-NLAF section">Back to Library</a>
+    </nav>
+
+    <header>
+        <!-- <h1>My Research Workspace</h1> -->
+    </header>
+
+    <main>
+        <section id="nlaf">
+            <!-- Input block with form moved before the Flourish map -->
+            <div class="input-block" style="text-align:center; padding: 20px;">
+                <form id="userForm">
+                    <label for="userInput">What would you like to explore today?</label><br><br>
+                    <input type="text" id="userInput" name="userInput" list="suggestions" placeholder="Ask a question ..." style="width: 300px; padding: 10px;" required>
+                    <datalist id="suggestions">
+                        <option value="Show me the trends in agri-food research topics.">
+                        <option value="How are various research topics in the agri-food sector interconnected?">
+                    </datalist>
+                    <button type="submit" class="modern-button" style="margin-left: 10px;">Enter</button>
+                </form>
+    
+                <!-- Placeholder for displaying response -->
+                <div id="responseMessage" style="margin-top: 20px;"></div>
+            </div>
+    
+            <!-- Flourish map block -->
+            <div class="flourish-embed flourish-map" data-src="visualisation/19704152">
+                <script src="https://public.flourish.studio/resources/embed.js"></script>
+                <noscript><img src="https://public.flourish.studio/visualisation/19704152/thumbnail" width="100%" alt="map visualization" /></noscript>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Modern button styling -->
+    <style>
+        .modern-button {
+            background-color: #4CAF50; /* Green background */
+            color: white; /* White text */
+            padding: 15px 32px; /* Padding */
+            font-size: 16px; /* Large text */
+            border: none; /* Remove borders */
+            border-radius: 8px; /* Rounded corners */
+            cursor: pointer; /* Pointer on hover */
+            transition: background-color 0.3s ease; /* Smooth hover effect */
+        }
+    
+        .modern-button:hover {
+            background-color: #45a049; /* Darker green on hover */
+        }
+    
+        .modern-button:active {
+            background-color: #3e8e41; /* Even darker green when clicked */
+            transform: scale(0.98); /* Slightly shrink button when clicked */
+        }
+    </style>
+    
+    <script>
+        document.getElementById('userForm').addEventListener('submit', function(event) {
+            event.preventDefault();  // Prevents the default form submission
+    
+            var userInput = document.getElementById('userInput').value;
+    
+            // If user selects a specific option, redirect to notebook.html
+            if (userInput === 'Show me the trends in agri-food research topics.') {
+                window.location.href = "workspace/notebooks1.html";
+            } else if (userInput === "How are various research topics in the agri-food sector interconnected?") {
+                window.location.href = "workspace/notebooks2.html";
+            } else {
+                // If no matching option, show message and add a button to notebooks_new.html
+                var responseDiv = document.getElementById('responseMessage');
+                responseDiv.innerHTML = 'Would you like to create a new learning notebook?'; // Set the message
+    
+                var newButton = document.createElement('button');
+                newButton.textContent = 'Create New Notebook';
+                newButton.classList.add('modern-button');  // Add modern-button class
+                newButton.style.marginTop = '10px';
+                newButton.onclick = function() {
+                    window.location.href = 'workspace/notebooks_new.html';  // Redirect to notebooks_new.html
+                };
+    
+                // Append the button to the response div
+                responseDiv.appendChild(newButton);
+            }
+        });
+    </script>
+    
+    
+    
+    
+    <footer class="footer-container">
+        <p>For demonstration purposes only.</p>
+    </footer>
+    
+</body>
+</html>

@@ -1,216 +1,286 @@
+
+
 <!DOCTYPE html>
-<html lang="en">
-    
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-us">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Chatbot demo">
-    <meta name="keywords" content=" ">
-    <meta name="author" content="Weiyao Meng">
-    <title>Chatbot Demo</title>
-    <style>
-        main {
-        display: flex;
-        justify-content: space-between; /* Adds space between columns */
-        gap: 20px; /* Adds space between sections */
-        padding: 20px;
-    }
+    <!-- Copyright © 2005-2021 by Lucidea Technologies Corp., Richmond BC Canada. All rights reserved. This code is proprietary to Lucidea Technologies Corp. -->
+<link rel="SHORTCUT ICON" href="https://www.nlaf.uk/Library/images/icons/links/favicon.png"></link>
+<title>
+    NLAF Demo
+</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge;chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="The independent, collaborative news and information source for farming and food" />
+<meta name="keywords" content="NLAF, Food and Farming Futures, OpenFields, landbased, library, open-access, research, open learning, technology transfer, knowledge exchange" />
+<meta name="author" content="Food and Farming Futures">
+<meta http-equiv="refresh" content="4800" >
+<meta name="keywords" content="LucideaKMPresto">
 
-    /* Make each section take up equal space */
-    section {
-        flex: 1; /* Each section takes equal space */
-        padding: 10px;
-        border: 1px solid #ddd; /* Optional: Add a border for better visualization */
-    }
+<link id="inmPrestoTheme" rel="stylesheet" href="https://www.nlaf.uk/Library/styles/scss/themes/National_Library_for_AgriFood_Draft_5/theme_04252024_111100.css" type="text/css" />
+<link type="text/css" href="https://www.nlaf.uk/Library/styles/css/presto.min.css?v=5.5.0.152" rel="stylesheet"  />
+<style id="inmPrestoAppCssOverrides"></style>
+<script type="text/javascript" id="inmPrestoScripts" src="https://www.nlaf.uk/Library/jscript/presto.min.js?v=5.5.0.152" data-ver="5.5.0.152"></script>
+<script type="text/javascript" src="https://www.nlaf.uk/Library/jscript/CustomCommonScripts.js?v=5.5.0.152"></script>
+<script language="javascript" src='https://www.nlaf.uk/Library/help/RoboHelp_CSH.js?v=5.5.0.152' type="text/javascript"></script>
 
-    /* Optional: Add some responsiveness */
-    @media (max-width: 768px) {
-        main {
-            flex-direction: column; /* Stack vertically on smaller screens */
-        }
-    }
-        body, html {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 0;
-            padding: 0;
-            overflow-x: hidden; /* Prevent horizontal scrolling */
-        }
 
-        nav {
-            background-color: #333;
-            color: white;
-            width: 100%;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            padding: 10px 0;
-        }
-
-        nav a {
-            color: white;
-            padding: 10px;
-            text-decoration: none;
-            font-size: 16px;
-        }
-
-        nav a:hover {
-            background-color: #555;
-        }
-
-        .flex-container, .center-container {
-            padding: 20px;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .flex-item, .center-container > div {
-            margin: 10px;
-        }
-
-        .flex-item img, iframe {
-            width: 100%;
-            max-width: 100%;
-            height: auto;
-        }
-
-        h3 a, h4 a {
-            color: inherit;  /* Inherits the color from the parent element */
-            text-decoration: none;  /* No underline by default */
-        }
-
-        h3 a:hover, h4 a:hover {
-            text-decoration: underline;  /* Underline on hover for better interactivity */
-        }
-
-        .embed-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        .flourish-embed {
-            width: 100%;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        footer {
-            padding: 20px;
-            background-color: #f1f1f1;
-            text-align: center;
-        }
-
-        footer small {
-            font-size: 0.8em;
-            color: #555;
-        }
-
-        @media (max-width: 767px) {
-            nav {
-                flex-direction: column; /* Stack navbar items vertically */
-            }
-
-            .flex-container, .center-container {
-                flex-direction: column;
-            }
-
-            .flourish-embed {
-                max-width: 100%;
-            }
-        }
-
-        .footer-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .qr-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .qr-item img {
-            max-width: 100px; /* Adjust size for a footnote-like appearance */
-            height: auto;
-        }
-    </style>
-
+<script>
+    window.codySettings = { widget_id: '9d29f830-71d6-4176-baef-f74eb4333b06' };
+    
+    !function(){var t=window,e=document,a=function(){var t=e.createElement("script");t.type="text/javascript",t.async=!0,t.src="https://trinketsofcody.com/cody-widget.js";var a=e.getElementsByTagName("script")[0];a.parentNode.insertBefore(t,a)};"complete"===document.readyState?a():t.attachEvent?t.attachEvent("onload",a):t.addEventListener("load",a,!1)}();
+    </script>
 </head>
-<body>
-    <nav id="navbar">
-        <!-- <a href="#tbw" aria-label="Think Better World section">Think Better Bot</a> -->
-        <a href="tbw-bot.html" aria-label="Think Better World section">Think Better Bot</a>
-        <a href="nlaf-bot.html" aria-label="NLAF section">NLAF Bot</a>
-        <a href="index.html" aria-label="TBW-NLAF section">TBW-NLAF Bot</a>
-    </nav>
 
-    <header>
-        <h1>Chatbot Demo</h1>
-    </header>
-
-    <main>
-        <!-- <section id="combined"> -->
-            <!-- <h2>TBW-NLAF Bot</h2> -->
+<body id="ctl00_ctl00_PageBody" style="width:100%;height:100%;margin:0px; padding:0px;" class="inmg-body home-home">
 
 
-            <!-- <iframe src="https://embed.cody.bot/9d22e0ff-09ef-4c68-8998-31632f639f2f" 
-            style="border:0px; width: 90vh; height: 60vh;"
-             name="codyai" scrolling="no" 
-            frameborder="1" marginheight="0" marginwidth="0" allowfullscreen></iframe> -->
-
-            <!-- Participate in our <a href="https://www.mentimeter.com/app/presentation/n/alm7d96tu2rsij526cm3k7w4xsrfpro6/present?question=1oco4czsqta3" target="_blank" aria-label="Join the Menti">Menti</a> survey.
-            <iframe src="https://www.menti.com/al6ejbwvhnbe" style="width: 100%; height: 80vh; border: none;" title="Important Food Topics"></iframe> -->
-        <!-- </section> -->
-
-        <section id="tbw">
-            
-            <h2>Think Better Bot</h2>
-            <iframe src="https://embed.cody.bot/9d2a0462-f263-4a53-b6c8-5373ddbeaae2" style="border:0px;height:600px;width:400" name="codyai" scrolling="no" frameborder="1" marginheight="0" marginwidth="0" allowfullscreen></iframe>
-
-            <!-- <div class="embed-container">
-                <div class="flourish-embed" data-src="story/2482399">
-                    <script src="https://public.flourish.studio/resources/embed.js"></script>
+<div class="banner-nav-container container-fluid">
+    <nav id="inmTopBar" class="navbar navbar-expand-sm navbar-expand-md navbar-dark fixed-top">
+        <div id="inm-top-bar-container" class="full-width">
+            <div id="inm-banner-bar" class="row">
+                <div class="col-6 col-md-8" style="padding-right: 0px; padding-left: 0px;">
+                    <ul id="inm-banner-bar-left-area" class="navbar-nav">
+                        
+                        <a id="hlLogoBrandLink" class="navbar-brand brand-image" aria-label="Home Page" href="https://www.nlaf.uk/Library"><img id="inmBrandLogo" title="The National Libraries for Agri-Food" class="img-fluid" title="Brand Logo" src="https://www.nlaf.uk/Library/styles/scss/themes/National_Library_for_AgriFood_Draft_5/images/NLAF%20twoline%20logotype.png" alt="The National Libraries for Agri-Food" style="border-width:0px;" /></a>
+                        <li class="banner-bar-content nav-item" style="width:100%"></li>
+                    </ul>
                 </div>
-            </div> -->
-            <!-- <div class="embed-container">
-                <div class="flourish-embed" data-src="story/2482260">
-                    <script src="https://public.flourish.studio/resources/embed.js"></script>
-                </div> -->
+                <div class="col-6 col-md-4" style="padding-right: 0px; padding-left: 0px;">
+                    
+
+<script language="Javascript" type="text/javascript">
+<!--
+    function Inmagicinc_LoginAsLocaleGuest(locale) {
+        var endpointUrl = "/" + commonScripts.GetApplicationUrlPath() + "/AjaxServices/endpoints/user.aspx";
+        var JSONData = "{\"locale\":'" + locale + "'}";
+        $.ajax({
+            type: "POST",
+            url: endpointUrl + '/LoginAsLocaleGuest',
+            data: JSONData,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: true,
+            success: function (result) {
+                //redirect to home page
+                window.location = result.d;
+
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                //display the error
+                cs.HandleAjaxException('', xhr, ajaxOptions, false);
+
+            }
+        });
+    }
+//-->
+</script>
+
+<ul id="inmFullRightMenu" class="navbar-nav float-right">
+    <li id="mi-Undefined1243" class="inm-tooltip dropdown nav-item" title="Sign Up"><a href="#" class="dropdown-toggle nav-link banner-icon-btn inm-menu-list-item"  data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" aria-label="Sign Up Menu"><i class="fa inm-custom-menu-item fa-user-plus" aria-hidden="true"></i></a><div class="dropdown-menu dropdown-menu-right inm-menu-items"><a href="https://foodandfarmingfutures.us15.list-manage.com/subscribe?u=eb10e2cb536aa8474452095af&id=0e4b84e572" class="dropdown-item inm-custom-child-item" target="_blank">Weekly newsletter & alerts</a><a href="https://www.nlaf.uk/Library/myaccount/SubscribeToGlobalAlerts.aspx" class="dropdown-item inm-custom-child-item" target="_self">Specific subject alerts (registered users only)</a><a href="https://nlaf.uk/Library/user/CreateSelfRegisteredUser.aspx?ctID=MDkxNzhlNWMtNTE2NC00ODJkLThhMTQtM2IxYTQ3NjIxNjI1&" class="dropdown-item inm-custom-child-item" target="_self">Register as a new user</a></div></li><li id="mi-Language" class="inm-tooltip dropdown nav-item" title="Language"><a href="#" class="dropdown-toggle nav-link banner-icon-btn inm-menu-list-item"  data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" aria-label="Language Menu">Language</a><div class="dropdown-menu dropdown-menu-right inm-menu-items"><a href="javascript:Inmagicinc_LoginAsLocaleGuest('en-GB');" class="dropdown-item " target="_self"><span class="selected-home-page-menu-item"><i class="fa check-icon" aria-hidden="true"></i>&nbsp;English - Great Britain</span></a><a href="javascript:Inmagicinc_LoginAsLocaleGuest('en-US');" class="dropdown-item " target="_self"><span class="home-page-menu-item">English - United States</span></a></div></li><li id="mi-Undefined1217" class="inm-tooltip nav-item" title="Find us on Facebook"><a href="https://www.facebook.com/Farming-Food-Futures-677334599108702/" class="inm-tooltip nav-link banner-icon-btn" target="_blank" aria-label="Find us on Facebook Link"><i class="fa inm-custom-menu-item fa-facebook-official" aria-hidden="true"></i></a></li><li id="mi-Undefined1221" class="inm-tooltip nav-item" title="Follow us on Twitter"><a href="https://twitter.com/FarmingFutures" class="inm-tooltip nav-link banner-icon-btn" target="_blank" aria-label="Follow us on Twitter Link"><i class="fa inm-custom-menu-item fa-twitter-square" aria-hidden="true"></i></a></li><li id="mi-Home" class="inm-tooltip dropdown nav-item" title="Home"><a href="#" class="dropdown-toggle nav-link banner-icon-btn inm-menu-list-item"  data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" aria-label="Home Menu"><i class="fa home-icon" aria-hidden="true"></i></a><div class="dropdown-menu dropdown-menu-right inm-menu-items"><a href="/Library/home/home.aspx?ssid=c2NyZWVuSURfMTkyMzc=" class="dropdown-item " target="_self"><span class="home-page-menu-item">Events Calendar</span></a><a href="/Library/home/home.aspx?ssid=c2NyZWVuSURfMjAwNDc=" class="dropdown-item " target="_self"><span class="home-page-menu-item">Library metrics</span></a><a href="/Library/home/home.aspx?ssid=c2NyZWVuSURfMTgwMjk=" class="dropdown-item " target="_self"><span class="home-page-menu-item">N8AF KEF (Home)</span></a><a href="/Library/home/home.aspx?ssid=c2NyZWVuSURfMTkxMTE=" class="dropdown-item " target="_self"><span class="selected-home-page-menu-item"><i class="fa check-icon" aria-hidden="true"></i>&nbsp;NLAF Home</span></a><a href="/Library/home/home.aspx?ssid=c2NyZWVuSURfMjAwNTk=" class="dropdown-item " target="_self"><span class="home-page-menu-item">Organisations</span></a><a href="/Library/home/home.aspx?ssid=c2NyZWVuSURfMjI1NDQ=" class="dropdown-item " target="_self"><span class="home-page-menu-item">Pledges and commitments</span></a><a href="/Library/home/home.aspx?ssid=c2NyZWVuSURfMjAwMzc=" class="dropdown-item " target="_self"><span class="home-page-menu-item">Recent items gallery</span></a><a href="/Library/home/home.aspx?ssid=c2NyZWVuSURfMjAwNTg=" class="dropdown-item " target="_self"><span class="home-page-menu-item">Recent items listing</span></a><a href="research workspace demo.html" class="dropdown-item " target="_self"><span class="home-page-menu-item">Recently added items</span></a></div></li><li id="mi-MyAccount" class="dropdown nav-item"><a href="#" class="dropdown-toggle nav-link banner-icon-btn inm-menu-list-item"  data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" aria-label=" Menu"><i class="fa no-profile-img-icon" aria-hidden="true"></i></a><div class="dropdown-menu dropdown-menu-right inm-menu-items"><a href="research workspace demo.html" class="dropdown-item " target="_self">My Knowledge Studio</a></div></li>
+</ul>
+
+
+
+                </div>
             </div>
-        </section>
 
-        <section id="NLAF">
-            <h2>NLAF Bot</h2>
-            <iframe src="https://embed.cody.bot/9d29f830-71d6-4176-baef-f74eb4333b06" style="border:0px;height:600px;width:400" name="codyai" scrolling="no" frameborder="1" marginheight="0" marginwidth="0" allowfullscreen></iframe>
-
-            <!-- <iframe src="https://embed.cody.bot/9d29f830-71d6-4176-baef-f74eb4333b06" style="border:0px;height:600px;width:400" name="codyai" scrolling="no" frameborder="1" marginheight="0" marginwidth="0" allowfullscreen></iframe> -->
-
-            <!-- <div class="flourish-embed" data-src="story/2482376">
-                <script src="https://public.flourish.studio/resources/embed.js"></script>
-            </div> -->
-        </section>
-    </main>
-
-    <footer class="footer-container">
-        <p>
-            For demonstration purpose only.
-        </p>
-        <!-- <div class="qr-item">
-            <img src="assets/qr code/TBW LinkedIn QR Code.png" alt="linkedin tbw">
-            <small>Join us on <a href="https://www.linkedin.com/showcase/think-better-world/" target="_blank" aria-label="Join us on LinkedIn">LinkedIn</a> for updates.</small>
+            <div id="inm-menu-bar-container" class="row">
+                <div id="divSecondaryMenuBar" class="full-width collapse inm-hover-menu show" style="padding-right: 0px; padding-left: 0px;" data-delay="500">
+                    <ul id="inm-menu-bar" class="navbar-nav">
+                        <li id="rootItem-146" class="nav-item dropdown inm-menu"><a href="#" class="inm-custom-menu-item-en-gb nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Home</a>
+                            <div id="inm-menu-146-items" class="dropdown-menu inm-menu-items"><a href="https://www.nlaf.uk/Library/home/home.aspx" id="menu-item-custom-1230" title="Home" target="_self" class="inm-custom-child-item-en-gb dropdown-item">Home</a><a href="https://www.nlaf.uk/Library/pl/ZWU0MDRiYzMtZWM0My00MzZkLTk1OWQtYjUyODBhNjFiMjcwLjQx" id="menu-item-custom-1229" title="About NLAF" target="_self" class="inm-custom-child-item-en-gb dropdown-item">About NLAF</a><a href="https://www.nlaf.uk/Library/home/home.aspx?ssid=Pledges" id="menu-item-custom-1267" title="Pledges & Commitments" target="_self" class="inm-custom-child-item-en-gb dropdown-item">Pledges & Commitments</a><a href="https://www.nlaf.uk/Library/pl/ZWU0MDRiYzMtZWM0My00MzZkLTk1OWQtYjUyODBhNjFiMjcwLjQy" id="menu-item-custom-1235" title="Contacting NLAF" target="_blank" class="inm-custom-child-item-en-gb dropdown-item">Contacting NLAF</a><a href="https://www.nlaf.uk/Library/pl/ZWU0MDRiYzMtZWM0My00MzZkLTk1OWQtYjUyODBhNjFiMjcwLjQz" id="menu-item-custom-1236" title="Signing up" target="_blank" class="inm-custom-child-item-en-gb dropdown-item">Signing up</a><a href="https://www.nlaf.uk/Library/home/home.aspx?ssid=Library_Metrics" id="menu-item-custom-1241" title="Metrics" target="_self" class="inm-custom-child-item-en-gb dropdown-item">Metrics</a></div></li><li id="rootItem-Search" class="nav-item dropdown inm-menu"><a href="#" class="inm-custom-menu-item-en-gb inmg-mi-search nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Search</a>
+                                <div id="inm-menu-search-items" class="dropdown-menu inm-menu-items"><a href="/Library/content/AdvancedSearch.aspx?ctID=ZWVhNzBlY2QtZWJjNi00YWZiLWE1MTAtNWExOTFiMjJjOWU1" id="menu-item-Search-48" title="Technical and Business Information" target="_self" class="dropdown-item">Technical and Business Information</a><a href="/Library/content/AdvancedSearch.aspx?ctID=MzFjODlmMDItNDc4My00N2YxLTk0YjEtYzA1ZWI0MmY2ZDJm" id="menu-item-Search-49" title="Research Outputs" target="_self" class="dropdown-item">Research Outputs</a><a href="/Library/content/AdvancedSearch.aspx?ctID=NzNmYjdmMDQtNmU5Ny00YzgwLWIyYjMtM2MzMWE0YmZkZWJj" id="menu-item-Search-50" title="Open Learning Materials" target="_self" class="dropdown-item">Open Learning Materials</a><a href="#" onclick="javascript:inmRunSavedSearch.ShowOverlay(); return false;" id="menu-item-Search-153" title="Run Saved Search" target="_self" class="inmg-mi-search-runsavedsearch-en-gb dropdown-item">Run Saved Search</a><hr></div></li><li id="rootItem-Browse" class="nav-item dropdown inm-menu"><a href="#" class="inm-custom-menu-item-en-gb inmg-mi-browse nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Browse</a>
+                                    <div id="inm-menu-browse-items" class="dropdown-menu inm-menu-items"><a href="/Library/collections/BrowseContentCollection.aspx?ccID=MQ==" id="menu-item-Browse-132" title="NLAF Subjects" target="_self" class="dropdown-item">NLAF Subjects</a><a href="/Library/collections/BrowseContentCollection.aspx?ccID=MTU2" id="menu-item-Browse-1255" title="F&FF Reviews" target="_self" class="dropdown-item">F&FF Reviews</a><a href="/Library/collections/BrowseContentCollection.aspx?ccID=MTU3" id="menu-item-Browse-1256" title="Podcasts" target="_self" class="dropdown-item">Podcasts</a><a href="https://www.nlaf.uk/Library/home/home.aspx?ssid=c2NyZWVuSURfMjAwNTk=" id="menu-item-Browse-1242" title="Organisations" target="_self" class="inm-custom-child-item-en-gb dropdown-item">Organisations</a><a href="https://www.nlaf.uk/Library/home/home.aspx?ssid=c2NyZWVuSURfMTkyMzc=" id="menu-item-Browse-1211" title="Events" target="_self" class="inm-custom-child-item-en-gb dropdown-item">Events</a></div></li><li id="rootItem-1237" class="nav-item dropdown inm-menu"><a href="#" class="inm-custom-menu-item-en-gb nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Collections</a>
+                                        <div id="inm-menu-1237-items" class="dropdown-menu inm-menu-items"><a href="https://www.nlaf.uk/Library/collections/BrowseContentCollection.aspx?ccID=MzY=" id="menu-item-custom-1238" title="Harper Adams University" target="_self" class="inm-custom-child-item-en-gb dropdown-item">Harper Adams University</a><a href="https://www.nlaf.uk/Library/collections/BrowseContentCollection.aspx?ccID=MTA0" id="menu-item-custom-1239" title="Rusource Briefings" target="_self" class="inm-custom-child-item-en-gb dropdown-item">Rusource Briefings</a><a href="https://www.nlaf.uk/Library/collections/BrowseContentCollection.aspx?ccID=MTU1" id="menu-item-custom-1240" title="N8AF KEF" target="_self" class="inm-custom-child-item-en-gb dropdown-item">N8AF KEF</a></div></li><li id="rootItem-Blog" class="nav-item dropdown inm-menu"><a href="#" class="inm-custom-menu-item-en-gb inmg-mi-blog nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Blogs</a>
+                                            <div id="inm-menu-blog-items" class="dropdown-menu inm-menu-items"><a href="/Library/blog/default.aspx?blID=OA==" id="menu-item-Blog-1226" title="NLAF Roadmap" target="_self" class="dropdown-item">NLAF Roadmap</a></div></li><li id="rootItem-141" class="nav-item dropdown inm-menu"><a href="#" class="inm-custom-menu-item-en-gb nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Guidelines</a>
+                                                <div id="inm-menu-141-items" class="dropdown-menu inm-menu-items"><a href="http://www.nlaf.uk/Library/collections/BrowseContentCollection.aspx?ccID=MTQ5" id="menu-item-custom-1224" title="Frequently Asked Questions" target="_self" class="inm-custom-child-item-en-gb dropdown-item">Frequently Asked Questions</a><a href="http://www.nlaf.uk/Library/pl/ZWU0MDRiYzMtZWM0My00MzZkLTk1OWQtYjUyODBhNjFiMjcwLjM=" id="menu-item-custom-1204" title="Terms and Conditions" target="_self" class="inm-custom-child-item-en-gb dropdown-item">Terms and Conditions</a><a href="http://www.nlaf.uk/Library/pl/ZWU0MDRiYzMtZWM0My00MzZkLTk1OWQtYjUyODBhNjFiMjcwLjE=" id="menu-item-custom-1205" title="Privacy Policy" target="_self" class="inm-custom-child-item-en-gb dropdown-item">Privacy Policy</a><a href="http://www.nlaf.uk/Library/pl/ZWU0MDRiYzMtZWM0My00MzZkLTk1OWQtYjUyODBhNjFiMjcwLjI=" id="menu-item-custom-1206" title="Submissions" target="_self" class="inm-custom-child-item-en-gb dropdown-item">Submissions</a></div></li><li id="rootItem-1191" class="nav-item dropdown inm-menu"><a href="#" class="inm-custom-menu-item-en-gb nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Subscribe</a>
+                                                    <div id="inm-menu-1191-items" class="dropdown-menu inm-menu-items"><a href="http://eepurl.com/dsbETb" id="menu-item-custom-1232" title="Weekly newletter and alerts" target="_blank" class="inm-custom-child-item-en-gb dropdown-item">Weekly newletter and alerts</a><a href="https://www.nlaf.uk/Library/myaccount/SubscribeToGlobalAlerts.aspx" id="menu-item-custom-1233" title="Specific subject alerts (registered users only)" target="_blank" class="inm-custom-child-item-en-gb dropdown-item">Specific subject alerts (registered users only)</a><a href="https://nlaf.uk/Library/user/CreateSelfRegisteredUser.aspx?ctID=MDkxNzhlNWMtNTE2NC00ODJkLThhMTQtM2IxYTQ3NjIxNjI1&" id="menu-item-custom-1234" title="Register as a new user" target="_self" class="inm-custom-child-item-en-gb dropdown-item">Register as a new user</a></div></li>
+                                                    <li id="mi-ChatWithMe" class="inm-tooltip nav-item" title="Chat with me">
+                                                        <a href="nlaf-bot.html" class="nav-link banner-icon-btn" target="_self" aria-label="Chat with me">
+                                                            <i class="fa fa-comments" aria-hidden="true"></i>&nbsp;Chat with me
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                    
+                </div>
+            </div>
         </div>
-        <p>
-            Visit our <a href="http://www.thinkbetterworld.com/" target="_blank" aria-label="Think Better World Alliance Website">Think Better World Alliance Website</a> to get involved.
-        </p>
-        <p>
-            <small>Visualisation template courtesy of <a href="https://flourish.studio" target="_blank" aria-label="Flourish Studio">Flourish</a> (https://flourish.studio)</small>
-        </p> -->
-    </footer>
+    </nav>
+</div>
+  
+<div id="SessionExpiredPopup" class="modal fade" role="dialog" aria-labelledby="SessionExpiredPopup-modal-label">
+	<div id="SessionExpiredPopup-modal-dialog" class="modal-dialog" role="document"><div id="SessionExpiredPopup-modal-content" class="modal-content inm-panel-container"><div id="SessionExpiredPopup-modal-header" class="modal-header inm-panel-header"><h4 class="modal-title" id="SessionExpiredPopup-modal-label"></h4></div><div id="SessionExpiredPopup-modal-body" class="inm-panel-body"><div id="SessionExpiredPopup-intro" class="modal-intro"></div><div id="SessionExpiredPopup-validation-container" class="modal-validation"><ul id="SessionExpiredPopup-error-list"></ul></div><div id="SessionExpiredPopup-input-container" class="modal-body modal-input-container full-width">
+        
+        <div></div>
+
+    </div><div class="modal-processing"><div style="padding-top: 5px;" id="SessionExpiredPopup-processing"><i class="fa fa-spinner fa-pulse fa-fw"></i><span class="sr-only">&nbsp;<span style="vertical-align: middle;">Processing...</span></span>&nbsp;<span style="vertical-align: middle;">Processing...</span></div></div></div><div id="SessionExpiredPopup-modal-footer" class="modal-footer inm-panel-footer"></div></div></div>
+</div>
+
+<div id="inmAboutModal" class="modal fade" role="dialog" aria-labelledby="inmAboutModal-modal-label">
+	<div id="inmAboutModal-modal-dialog" class="modal-dialog" role="document"><div id="inmAboutModal-modal-content" class="modal-content inm-panel-container"><div id="inmAboutModal-modal-header" class="modal-header inm-panel-header"><h4 class="modal-title" id="inmAboutModal-modal-label"></h4></div><div id="inmAboutModal-modal-body" class="inm-panel-body"><div id="inmAboutModal-intro" class="modal-intro"></div><div id="inmAboutModal-validation-container" class="modal-validation"><ul id="inmAboutModal-error-list"></ul></div><div id="inmAboutModal-input-container" class="modal-body modal-input-container full-width">
+        
+        <div class="full-width smallprint">
+            <div id="about-logo-container" class="navbar-brand brand-image"><img id="inmBrandLogo" class="img-fluid" title="Brand Logo" src="/Library/images/branding/lucidea-logo.png" alt="Brand Logo" style="border-width:0px;" /></div>
+            
+            <hr />
+            <div id="lblVersion" Style="font-size: larger;font-weight: bold; padding-bottom:15px;"><strong>Inmagic<sup>&reg;</sup> Presto</strong> Version 5.5 Build 152</div>
+            
+            
+            
+            <div id="div_tooltip_template" class="tooltip_templates" Style="padding-bottom:10px;display:none"></div>
+            <hr />
+            <strong>Inmagic<sup>&reg;</sup> Presto</strong><br><br>Copyright &copy; 2005-2021 by Lucidea Technologies Corp., Richmond BC Canada. All rights reserved.<br> Inmagic&#0174; and the Inmagic logo are registered trademarks of Lucidea Technologies Corp.<br>Unauthorized duplication or distribution is prohibited.<br />	<br> Other brand and product names are trademarks or registered trademarks of their respective holders. Use of any other product name does not imply endorsement of that product by Inmagic.&nbsp;<br /><br /><a href="../help/ThirdPartyLicenses.htm" target="_blank">Third-party Licenses</a>
+        
+        </div>
+
+    </div><div class="modal-processing"><div style="padding-top: 5px;" id="inmAboutModal-processing"><i class="fa fa-spinner fa-pulse fa-fw"></i><span class="sr-only">&nbsp;<span style="vertical-align: middle;">Processing...</span></span>&nbsp;<span style="vertical-align: middle;">Processing...</span></div></div></div><div id="inmAboutModal-modal-footer" class="modal-footer inm-panel-footer"></div></div></div>
+</div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.inm-about-tooltip').tooltipster({
+                theme: ['tooltipster-light']
+            });
+        });
+
+    </script>
+
+
+<div id="inmContentContainer" class="container-fluid fixed-menu-padding">
+    <form name="aspnetForm" method="post" action="./home.aspx" id="aspnetForm">
+<div>
+<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="" />
+<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="" />
+
+</div>
+<div id="main-panel" class="container"></div>
+    <!-- Other content for the main panel -->
+
+    <!-- Add your image here -->
+    <div class="main-image-container" style="text-align:center; padding: 20px;">
+        <img src="logo/nlaf main.png" alt="NLAF Main Logo" style="max-width: 100%; height: auto;" />
+    </div>
+
+    <!-- Continue with other main panel content -->
+</div>
+<script type="text/javascript">
+//<![CDATA[
+var theForm = document.forms['aspnetForm'];
+if (!theForm) {
+    theForm = document.aspnetForm;
+}
+function __doPostBack(eventTarget, eventArgument) {
+    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+        theForm.__EVENTTARGET.value = eventTarget;
+        theForm.__EVENTARGUMENT.value = eventArgument;
+        theForm.submit();
+    }
+}
+//]]>
+</script>
+
+
+<script src="/Library/WebResource.axd?d=mzc5Vx37PzRI0I67zM8U1qLBO0TZEz4EVkpBlfc7avwI3_vmlupa1vDGyeisNKzDSxxm3NCPsZE_yRqlGqcO-agfw9XYX0LtfW9Iow8yXcE1&amp;t=638343939423008439" type="text/javascript"></script>
+
+
+<script src="/Library/jscript/webcontrols/RunSavedSearch/RunSavedSearch_scripts.js?v=5.5.0.152" type="text/javascript"></script>
+<script src="/Library/ScriptResource.axd?d=htPw5TB4rOSqzFk2ZdeNRmvxlSrsUYvlWL5Yf4e1EBtG9d0HmKINxj6vb81UVzj65neRh4bjYDoQfgNyOg2O8HAkY53rmdWgegI8Qsj808iKJmZpqGqvNgJBwvcayOnWFyNYGH7G2tx_vNc0rFqLl9h2qsVzzia-9HhH3P2ylhg1&amp;t=ffffffffadad19fc" type="text/javascript"></script>
+<script src="/Library/ScriptResource.axd?d=Bay2zUR5tXZJaJ8xJBbER6sW6WU_1X1obfZTKEuPrgHyPd6WqA1_rlsS0XAcpiwsx0vPO6YPD4evIxTOpkffMEqLKoiUoTCum11V2_5DuvktgpVpkCWxal5bwCytQUxFBYWGl-_G88eo8LN58dyIsWpCJ3xxLMh4Yem2bBnj2MHWNv3P4IBD1p2Cer4oqYfY0&amp;t=ffffffffadad19fc" type="text/javascript"></script>
+<div>
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="228AE435" />
+</div>
+        <div id="inm-content-inner-container" class="row">
+            
+    <script type="text/javascript">
+//<![CDATA[
+Sys.WebForms.PageRequestManager._initialize('ctl00$ctl00$mpcSingleContent$_smAjaxScripts', 'aspnetForm', [], [], [], 90, 'ctl00$ctl00');
+//]]>
+</script>
+
+    
+
+    <a name="skipnav"></a>
+    
+    <div id="divContent" class="full-width">
+        <input type="hidden" name="ctl00$ctl00$mpcSingleContent$hfScreenId" id="hfScreenId" />
+        
+
+    <div id="inm-broadcast-message-container" class="row mt-2" style="text-align: left;display:none;">
+        
+    </div>
+
+    <div class="page-main-container row">
+        
+    </div>
+    
+    
+    <input type="hidden" id="hidCurrentHomeScreenId" value="screenID_19111"/>
+
+    </div>
+    
+
+        </div>
+    
+
+
+</form>
+</div>
+
+
+<div id="divFooterBarContentContainer"><span class="footer-bar-content"><center>For demonstration purpose only. </center>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-80LT8JSNPD"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-80LT8JSNPD');
+</script></span></div>
+
+
+    
+    <script type="text/javascript">
+
+        $(document).on('focusin', function (e) {
+            if ($(e.target).closest(".mce-window, .moxman-window").length) {
+                e.stopImmediatePropagation();
+            }
+        });
+
+        var footerBar = $.trim($("#divFooterBarContentContainer").html());
+        if (footerBar.length > 0) {
+            if (window.addEventListener)
+                window.addEventListener("load", function () { resetFooter(); }, false);
+
+            else
+            if (window.attachEvent)
+                window.attachEvent("onload", function () { resetFooter(); });
+
+            else
+            if (window.onLoad)
+                window.onload = resetFooter();
+
+        }
+
+        function migrateData(selection) {
+            if (selection) {
+                window.location = "/" + commonScripts.GetApplicationUrlPath() + "/configure/AdministratorTools/PrestoMigration/MigrateFromTextWorks.aspx?aofm=VHJ1ZQ==";
+            } else {
+                $("#modalMigrateLegacyData").inmModalDialog('close');
+                $("#modalMigrateDataLater").inmModalDialog('open');
+            }
+        }
+
+    </script>
+
+
+<div>
+	<div id="inmRunSavedSearch-form" class="modal fade" role="dialog" aria-labelledby="inmRunSavedSearch-form-modal-label">
+		<div id="inmRunSavedSearch-form-modal-dialog" class="modal-dialog" role="document"><div id="inmRunSavedSearch-form-modal-content" class="modal-content inm-panel-container"><div id="inmRunSavedSearch-form-modal-header" class="modal-header inm-panel-header"><h4 class="modal-title" id="inmRunSavedSearch-form-modal-label"></h4></div><div id="inmRunSavedSearch-form-modal-body" class="inm-panel-body"><div id="inmRunSavedSearch-form-intro" class="modal-intro">Click on a Saved Search name to run the search.</div><div id="inmRunSavedSearch-form-validation-container" class="modal-validation"><ul id="inmRunSavedSearch-form-error-list"></ul></div><div id="inmRunSavedSearch-form-input-container" class="modal-body modal-input-container full-width"><div class="focalbox saved-search-container"></div></div><div class="modal-processing"><div style="padding-top: 5px;" id="inmRunSavedSearch-form-processing"><i class="fa fa-spinner fa-pulse fa-fw"></i><span class="sr-only">&nbsp;<span style="vertical-align: middle;">Processing...</span></span>&nbsp;<span style="vertical-align: middle;">Processing...</span></div></div></div><div id="inmRunSavedSearch-form-modal-footer" class="modal-footer inm-panel-footer"></div></div></div>
+	</div>
+</div>
 </body>
 </html>
