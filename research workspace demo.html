@@ -170,6 +170,8 @@
     </header>
 
     <main>
+        <h1>AgriConnect Research Hub</h1>
+        <p>Access your resources and manage your personal collection with ease.</p>
         <section id="nlaf">
             <!-- Input block with form moved before the Flourish map -->
             <div class="input-block" style="text-align:center; padding: 20px;">
@@ -179,6 +181,7 @@
                     <datalist id="suggestions">
                         <option value="Show me the trends in agri-food research topics.">
                         <option value="How are various research topics in the agri-food sector interconnected?">
+                        <option value="Recommon a latest work about organic food & drink."></option>
                     </datalist>
                     <button type="submit" class="modern-button" style="margin-left: 10px;">Enter</button>
                 </form>
@@ -229,7 +232,9 @@
                 window.location.href = "workspace/notebooks1.html";
             } else if (userInput === "How are various research topics in the agri-food sector interconnected?") {
                 window.location.href = "workspace/notebooks2.html";
-            } else {
+            } else if (userInput === "Recommon a latest work about organic food & drink."){
+                window.location.href = "workspace/notebooks3.html"
+            }else {
                 // If no matching option, show message and add a button to notebooks_new.html
                 var responseDiv = document.getElementById('responseMessage');
                 responseDiv.innerHTML = 'Would you like to create a new learning notebook?'; // Set the message
