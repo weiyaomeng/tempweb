@@ -77,6 +77,12 @@
             height: auto;
         }
 
+        h1 {
+            font-size: 2.5em;
+            font-weight: 600;
+            color: #333;
+        }
+
         h3 a, h4 a {
             color: inherit;  /* Inherits the color from the parent element */
             text-decoration: none;  /* No underline by default */
@@ -84,6 +90,35 @@
 
         h3 a:hover, h4 a:hover {
             text-decoration: underline;  /* Underline on hover for better interactivity */
+        }
+
+        p {
+            font-size: 1.2em;
+            color: #666;
+            margin-bottom: 40px;
+        }
+
+        .input-block {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .input-block label {
+            font-size: 1.1em;
+            color: #333;
+        }
+        input[type="text"] {
+            width: 80%;
+            max-width: 400px;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-size: 1em;
+            margin-top: 10px;
         }
 
         .embed-container {
@@ -110,19 +145,7 @@
             color: #555;
         }
 
-        @media (max-width: 767px) {
-            nav {
-                flex-direction: column; /* Stack navbar items vertically */
-            }
-
-            .flex-container, .center-container {
-                flex-direction: column;
-            }
-
-            .flourish-embed {
-                max-width: 100%;
-            }
-        }
+    
 
         .footer-container {
             display: flex;
@@ -139,6 +162,35 @@
         .qr-item img {
             max-width: 100px; /* Adjust size for a footnote-like appearance */
             height: auto;
+        }
+
+        .modern-button {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .modern-button:hover {
+            background-color: #0056b3;
+        }
+        #responseMessage {
+            margin-top: 20px;
+            color: #007BFF;
+        }
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+            input[type="text"] {
+                width: 100%;
+            }
+            .input-block {
+                padding: 15px;
+            }
         }
     </style>
     <script>

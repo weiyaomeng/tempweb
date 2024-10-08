@@ -77,6 +77,12 @@
             height: auto;
         }
 
+        h1 {
+            font-size: 2.5em;
+            font-weight: 600;
+            color: #333;
+        }
+
         h3 a, h4 a {
             color: inherit;  /* Inherits the color from the parent element */
             text-decoration: none;  /* No underline by default */
@@ -84,6 +90,12 @@
 
         h3 a:hover, h4 a:hover {
             text-decoration: underline;  /* Underline on hover for better interactivity */
+        }
+
+        p {
+            font-size: 1.2em;
+            color: #666;
+            margin-bottom: 40px;
         }
 
         .embed-container {
@@ -146,7 +158,11 @@
         
         !function(){var t=window,e=document,a=function(){var t=e.createElement("script");t.type="text/javascript",t.async=!0,t.src="https://trinketsofcody.com/cody-widget.js";var a=e.getElementsByTagName("script")[0];a.parentNode.insertBefore(t,a)};"complete"===document.readyState?a():t.attachEvent?t.attachEvent("onload",a):t.addEventListener("load",a,!1)}();
         </script>
-
+<script>
+    window.codySettings = { widget_id: '9d32bf57-b743-4f35-b1a0-8ca378f8978f' };
+    
+    !function(){var t=window,e=document,a=function(){var t=e.createElement("script");t.type="text/javascript",t.async=!0,t.src="https://trinketsofcody.com/cody-widget.js";var a=e.getElementsByTagName("script")[0];a.parentNode.insertBefore(t,a)};"complete"===document.readyState?a():t.attachEvent?t.attachEvent("onload",a):t.addEventListener("load",a,!1)}();
+    </script>
 </head>
 <body id="ctl00_ctl00_PageBody" style="width:100%;height:100%;margin:0px; padding:0px;" class="inmg-body home-home">
 
@@ -166,27 +182,29 @@
         </a>
     </div>
 
+    <iframe src="https://embed.cody.bot/9d32bf57-b743-4f35-b1a0-8ca378f8978f" style="border:0px;height:600px;width: 1000px;" name="codyai" scrolling="no" frameborder="1" marginheight="0" marginwidth="0" allowfullscreen></iframe>
+
     <!-- Input text box with dropdown -->
-    <div style="margin: 20px 0;">
+    <!-- <div style="margin: 20px 0;">
         <label for="query-input">Ask me a question about User Queries:</label>
         <select id="query-input" style="width: 50%; padding: 10px; font-size: 1em;" onchange="displayChart()">
             <option value="">-- Select a question --</option>
             <option value="pie">How do consumers FEEL about plant-based products?</option>
             <option value="bar">What aspects of nutrient management are concerning farmers the most?</option>
         </select>
-    </div>
+    </div> -->
 
-    <!-- Display images horizontally using flexbox, initially hidden -->
+    <!-- Display images horizontally using flexbox, initially hidden
     <div id="charts-container" style="display: flex; justify-content: space-evenly; align-items: center; margin-top: 20px;">
         <img id="pie-chart" src="logo/pie.png" alt="Pie Chart" style="width:45%; height:auto; display:none;">
         <img id="bar-chart" src="logo/bar.png" alt="Bar Chart" style="width:45%; height:auto; display:none;">
-    </div>
+    </div> -->
 
     <footer class="footer-container">
         <p>For demonstration purposes only.</p>
     </footer>
 
-    <script>
+    <!-- <script>
         // Function to display the correct chart based on the selected option
         function displayChart() {
             const queryInput = document.getElementById("query-input").value;
@@ -204,7 +222,7 @@
                 barChart.style.display = "block";
             }
         }
-    </script>
+    </script> -->
     
 </body>
 </html>
