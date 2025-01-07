@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fake or Fact: Who Has Got the Robot Radar</title>
-    <link rel="icon" href="favicon.png" type="image/x-icon">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -23,6 +23,13 @@
         }
         .hidden {
             display: none;
+        }
+        .review {
+            padding: 15px;
+            display: none;
+        }
+        .review.active {
+            display: block;
         }
         .review-title {
             font-size: 1.2em;
@@ -45,29 +52,25 @@
             border-radius: 5px;
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
         }
-        .classification button {
-            padding: 10px 20px;
-            font-size: 16px;
-            margin: 10px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
+        .classification {
+            margin-top: 10px;
         }
-        .classification .real {
-            background-color: #28a745;
-            color: white;
-        }
-        .classification .machine {
-            background-color: #dc3545;
-            color: white;
-        }
-        .product-info {
-            text-align: left;
+        .navigation {
             margin-top: 20px;
         }
-        .product-info img {
-            width: 200px;
-            margin-right: 10px;
+        .navigation button {
+            padding: 10px 15px;
+            margin: 0 10px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            border-radius: 5px;
+        }
+        .navigation button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
         }
     </style>
 </head>
@@ -86,37 +89,93 @@
     </div>
 
     <script>
-        // Example product information (replace with your dataset)
-        const productInfo = {
-            title: "VEVOR Milk Cream Centrifugal Separator",
-            price: "159.99",
-            main_category: "Industrial & Scientific",
-            average_rating: 3.8,
-            rating_number: 104,
-            features: [
-                "High-efficiency: This milk separator machine uses centrifugal force to separate milk into cream and skimmed milk.",
-                "100 Gal Large Output: It can continuously work for 4 hours and output 100Gal/400L milk.",
-                "High-quality Material: All parts that contact food are made of 304 food-grade stainless steel.",
-                "Easy To Use & Install: Simple to operate with only one button.",
-                "Wide Application: Can be used in America, Canada, Australia, and Europe."
-            ],
-            images: {
-                hi_res: [
-                    "https://m.media-amazon.com/images/I/71MWr7k8haL._SL1500_.jpg",
-                    "https://m.media-amazon.com/images/I/71RlzqhLPNS._SL1500_.jpg"
-                ]
-            },
-            store: "VEVOR",
-            categories: ["Home & Kitchen", "Kitchen & Dining", "Small Appliances"]
-        };
+        // Store parsed CSV data
+        let productData = [];
+        let reviewData = [];
+        let currentReviewIndex = 0; // Start with the first review
+        let userName = "";
 
-        let currentReviewIndex = 0;
-        let userName = ""; // Store the user's name
+        // Load and parse the 'meta.csv' file (product information)
+        function loadMetaData() {
+            console.log("Loading meta data...");
 
-        const reviewContainer = document.getElementById('reviewContainer');
-        const reviewContent = document.getElementById('reviewContent');
-        const welcomeContainer = document.getElementById('welcomeContainer');
-        const welcomeMessage = document.getElementById('welcomeMessage');
+            Papa.parse("data/meta.csv", {
+                download: true,
+                header: true,
+                dynamicTyping: true,
+                complete: function(results) {
+                    productData = results.data; // Store the parsed product data
+                    console.log("Meta Data Loaded:", productData); // Log the product data
+
+                    loadReviewData(); // Load review data after product data is loaded
+                },
+                error: function(error) {
+                    console.error("Error loading meta data:", error); // Log error
+                }
+            });
+        }
+
+        // Load and parse the 'review.csv' file (reviews)
+        function loadReviewData() {
+            console.log("Loading review data...");
+
+            Papa.parse("data/review.csv", {
+                download: true,
+                header: true,
+                dynamicTyping: true,
+                complete: function(results) {
+                    reviewData = results.data; // Store the parsed review data
+                    console.log("Review Data Loaded:", reviewData); // Log the review data
+
+                    renderReviews(); // Render reviews once both datasets are loaded
+                },
+                error: function(error) {
+                    console.error("Error loading review data:", error); // Log error
+                }
+            });
+        }
+
+        // Function to render reviews with product information
+        function renderReviews() {
+            const reviewContainer = document.getElementById('reviewContent');
+            reviewContainer.innerHTML = ''; // Clear existing content
+
+            console.log("Rendering reviews...");
+
+            // Ensure there are reviews to show
+            if (reviewData.length === 0) {
+                reviewContainer.innerHTML = "<p>No reviews available to display.</p>";
+                return;
+            }
+
+            reviewData.forEach(review => {
+                const product = productData.find(product => product.parent_asin === review.parent_asin);
+
+                if (product) {
+                    const reviewHTML = `
+                        <div class="review ${currentReviewIndex === 0 ? 'active' : ''}" id="review_${currentReviewIndex}">
+                            <h3>${product.title}</h3>
+                            <p><strong>Price:</strong> $${product.price}</p>
+                            <p><strong>Rating:</strong> ${product.average_rating} (${product.rating_number} reviews)</p>
+                            <div class="product-info">
+                                <h4>Features:</h4>
+                                <ul>
+                                    ${product.features.map(feature => `<li>${feature}</li>`).join('')}
+                                </ul>
+                            </div>
+                            <p><strong>Review:</strong></p>
+                            <div class="review-text">${review.text}</div>
+                            <div class="classification">
+                                <button class="real" onclick="submitToForm('Real', '${review.id}')">Real</button>
+                                <button class="machine" onclick="submitToForm('Machine-Generated', '${review.id}')">Machine-Generated</button>
+                            </div>
+                        </div>
+                    `;
+                    reviewContainer.innerHTML += reviewHTML;
+                    currentReviewIndex++;
+                }
+            });
+        }
 
         // Function to start the challenge
         function startChallenge() {
@@ -126,114 +185,43 @@
                 return;
             }
             userName = input.value.trim();
-            welcomeContainer.classList.add('hidden'); // Hide the welcome screen
-            reviewContainer.classList.remove('hidden'); // Show the review screen
-            welcomeMessage.textContent = `Welcome, ${userName}! Let's get started.`;
-            
-            // Optionally call this function to render the product info
-            renderProductInfo();  // Comment this line out to disable the product info display
-            renderReview();  // Always render the review section
+            document.getElementById('welcomeContainer').classList.add('hidden');
+            document.getElementById('reviewContainer').classList.remove('hidden');
+            document.getElementById('welcomeMessage').textContent = `Welcome, ${userName}! Let's get started.`;
+            loadMetaData(); // Start loading CSV files
         }
 
-        // Function to render product information (leave the code here, but you can comment out the call to this function)
-        function renderProductInfo() {
-            const productHTML = `
-                <div class="product-info">
-                    <h3>Product Information</h3>
-                    <p><strong>Category:</strong> ${productInfo.main_category}</p>
-                    <p><strong>Title:</strong> ${productInfo.title}</p>
-                    <p><strong>Price:</strong> $${productInfo.price}</p>
-                    <p><strong>Rating:</strong> ${productInfo.average_rating} (${productInfo.rating_number} reviews)</p>
-                    <p><strong>Features:</strong></p>
-                    <ul>
-                        ${productInfo.features.map(feature => `<li>${feature}</li>`).join('')}
-                    </ul>
-                    <p><strong>Categories:</strong> ${productInfo.categories.join(', ')}</p>
-                    <div class="images">
-                        ${productInfo.images.hi_res.map(img => `<img src="${img}" alt="Product Image">`).join('')}
-                    </div>
-                </div>
-            `;
-            reviewContent.innerHTML += productHTML; // Insert product details into the page
-        }
-
-        // Example reviews (replace with your dataset)
-        const reviews = [
-            {
-                id: "review_0",
-                rating: 5,
-                title: "Amazing Product!",
-                text: "This product exceeded my expectations. Highly recommend!",
-                images: [],
-                helpful_vote: 45
-            },
-            {
-                id: "review_1",
-                rating: 2,
-                title: "Not worth the price",
-                text: "The quality is not good and it broke after one use.",
-                images: ["https://via.placeholder.com/100"],
-                helpful_vote: 3
-            }
-        ];
-
-        // Function to render the current review
-        function renderReview() {
-            const review = reviews[currentReviewIndex];
-            reviewContent.innerHTML += `
-                <div class="review">
-                    <p><strong>Review ID:</strong> <span id="reviewId">${review.id}</span></p>
-                    <div class="rating">${'★'.repeat(review.rating)}${'☆'.repeat(5 - review.rating)}</div>
-                    <div class="review-title">${review.title}</div>
-                    <div class="review-text">${review.text}</div>
-                    <div class="helpful">${review.helpful_vote} people found this helpful</div>
-                    <div class="images">
-                        ${review.images.map(img => `<img src="${img}" alt="Review Image">`).join('')}
-                    </div>
-                    <div class="classification">
-                        <button class="real" onclick="submitToForm('Real')">Real</button>
-                        <button class="machine" onclick="submitToForm('Machine-Generated')">Machine-Generated</button>
-                    </div>
-                </div>
-            `;
-        }
-
-        // Submit data to Google Form
-        function submitToForm(decision) {
-            const currentReview = reviews[currentReviewIndex];
-
-            // Google Form URL (replace with your actual URL)
+        // Function to submit the user's decision to Google Form
+        function submitToForm(decision, reviewId) {
             const formURL = "https://docs.google.com/forms/d/e/1FAIpQLSdWrYS9K5H5dtHMXn8w5OA0Bjz_m60MjGCLjU3IOQxtPgoNTA/formResponse";
-
-            // Create form data
+            
             const formData = new URLSearchParams();
-            formData.append("entry.141195573", currentReview.id); // Replace with actual Review ID field ID
-            formData.append("entry.1251691115", decision);  // Replace with actual Decision field ID
-            formData.append("entry.328901112", userName);  // Replace with the field for User Name in your form
+            formData.append("entry.141195573", reviewId); // Review ID field
+            formData.append("entry.1251691115", decision); // Decision field
+            formData.append("entry.328901112", userName); // User name field
 
-            // Submit via fetch
             fetch(formURL, {
                 method: "POST",
                 body: formData,
                 mode: "no-cors"
             }).then(() => {
-                console.log(`Submitted: ${currentReview.id}, ${decision}, ${userName}`);
+                alert("Response submitted!");
                 moveToNextReview();
-            }).catch((error) => {
-                console.error("Error submitting to Google Form:", error);
+            }).catch(error => {
+                console.error("Error submitting form:", error);
                 alert("Failed to submit response. Please try again.");
             });
         }
 
-        // Move to the next review
+        // Move to the next review (if needed)
         function moveToNextReview() {
-            currentReviewIndex++;
-            if (currentReviewIndex < reviews.length) {
-                renderReview();
+            if (currentReviewIndex < reviewData.length) {
+                renderReviews();
             } else {
-                reviewContent.innerHTML = "<h2>Thank you for completing the challenge!</h2>";
+                document.getElementById('reviewContent').innerHTML = "<h2>Thank you for completing the challenge!</h2>";
             }
         }
+
     </script>
 </body>
 </html>
