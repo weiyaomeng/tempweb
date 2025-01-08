@@ -237,7 +237,7 @@
                 complete: function(results) {
                     reviewData = results.data;
                     console.log("Review Data Loaded:", reviewData);
-                    console.log("Number of reviews:", reviewData.length-1);
+                    console.log("Number of reviews:", reviewData.length);
                     // document.getElementById('reviewDataLength').textContent = `You will be reviewing ${reviewData.length} reviews.`;
                     renderReviews();
                 },
@@ -408,7 +408,7 @@
             console.log(`Progress updated: ${progressValue}%`);
 
             // Check if there are more reviews to show
-            if (currentReviewIndex < reviewData.length-1) {
+            if (currentReviewIndex < reviewData.length) {
                 renderReviews(); // Render the next review
             } else {
                 submitCorrectLabelsForm();
