@@ -206,12 +206,10 @@
         let reviewData = [];
         let currentReviewIndex = 0;
         let userName = "";
-        let correctLabels = 0; // Add counter for correct labels
 
         function loadMetaData() {
             console.log("Loading meta data...");
-            // Papa.parse("data/meta_with_images.csv", {
-            Papa.parse("data/data_metadata_more.csv", {
+            Papa.parse("data/meta_with_images.csv", {
                 download: true,
                 header: true,
                 dynamicTyping: true,
@@ -228,15 +226,13 @@
 
         function loadReviewData() {
             console.log("Loading review data...");
-            // Papa.parse("data/review.csv", {
-            Papa.parse("data/test1.csv", {
+            Papa.parse("data/review.csv", {
                 download: true,
                 header: true,
                 dynamicTyping: true,
                 complete: function(results) {
                     reviewData = results.data;
                     console.log("Review Data Loaded:", reviewData);
-                    console.log("Number of reviews:", reviewData.length-1);
                     // document.getElementById('reviewDataLength').textContent = `You will be reviewing ${reviewData.length} reviews.`;
                     renderReviews();
                 },
@@ -299,6 +295,46 @@
             const productImageUrl = product.image_url;
             console.log("Product Image URL:", productImageUrl);
 
+            // VIEW 1
+            // const reviewHTML = `
+            //     <div class="review">
+            //         <!-- Product Title -->
+            //         <div class="review-title">${product.title}</div>
+
+            //         <!-- Product Price and Rating -->
+            //         <p><strong>Price:</strong> $${product.price}</p>
+            //         <p><strong>Rating:</strong> ${product.average_rating} (${product.rating_number} reviews)</p>
+                    
+            //         <!-- Display Product Image -->
+            //         <div class="product-image">
+            //             <img src="${productImageUrl}" alt="${product.title}" style="width: 200px; height: auto;">
+            //         </div>
+                    
+            //         <!--
+            //         <div class="product-info">
+            //             <h4>Features:</h4>
+            //             <ul>
+            //                 ${featuresHTML}
+            //             </ul>
+            //         </div>
+            //         -->
+
+            //         <!-- Review Content -->
+            //         <p><strong>Amazon Customer</strong></p>
+            //         <div class="rating">${'★'.repeat(review.rating)}${'☆'.repeat(5 - review.rating)}</div>
+            //         <div class="review-title">${review.title}</div>
+            //         <div class="review-text">${review.text}</div>
+            //         <div class="helpful">${review.helpful_vote} people found this helpful</div>
+                    
+            //         <!-- Buttons for Classification -->
+            //         <div class="classification">
+            //             <button class="real" onclick="submitToForm('Real', '${review.id || review.parent_asin}')">Real</button>
+            //             <button class="machine" onclick="submitToForm('Machine-Generated', '${review.id || review.parent_asin}')">Machine-Generated</button>
+            //         </div>
+            //     </div>
+            // `;
+
+            //VIEW 2
             const reviewHTML = `
                 <div class="review">
                     <!-- Container for Left and Right Layout -->
@@ -327,8 +363,9 @@
 
                             <!-- Buttons for Classification -->
                             <div class="classification">
-                                <button class="real" onclick="submitToForm('Real', '${review.id || review.parent_asin}', '${review.label}')">Real</button>
-                                <button class="machine" onclick="submitToForm('Machine-Generated', '${review.id || review.parent_asin}', '${review.label}')">Machine-Generated</button>
+                                <button class="real" onclick="submitToForm('Real', '${review.id || review.parent_asin}')">Real</button>
+                                <button class="machine" onclick="submitToForm('Machine-Generated', '${review.id || review.parent_asin}')">Machine-Generated</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -348,15 +385,11 @@
             userName = input.value.trim();
             document.getElementById('welcomeContainer').classList.add('hidden');
             document.getElementById('reviewContainer').classList.remove('hidden');
-            // document.getElementById('welcomeMessage').textContent = `Welcome, ${userName}! Let's get started.`;
+            document.getElementById('welcomeMessage').textContent = `Welcome, ${userName}! Let's get started.`;
             loadMetaData();
         }
 
-        function submitToForm(decision, reviewId, label) {
-            if (decision === label) {
-                correctLabels++; // Increase the correct label count
-            }
-
+        function submitToForm(decision, reviewId) {
             const formURL = "https://docs.google.com/forms/d/e/1FAIpQLSdWrYS9K5H5dtHMXn8w5OA0Bjz_m60MjGCLjU3IOQxtPgoNTA/formResponse";
             const formData = new URLSearchParams();
             formData.append("entry.141195573", reviewId);
@@ -375,23 +408,6 @@
             });
         }
 
-        function submitCorrectLabelsForm() {
-            const correctLabelsFormURL = "https://docs.google.com/forms/u/0/d/e/1FAIpQLScIoplKIeL1DmeJ6IUIoPLmIiHxDW1U3XOxFel84S7vOcGO1w/formResponse";
-            const formData = new URLSearchParams();
-            formData.append("entry.2065126496", userName); // User's name
-            formData.append("entry.1182695243", correctLabels); // Correct labels count
-
-            fetch(correctLabelsFormURL, {
-                method: "POST",
-                body: formData,
-                mode: "no-cors"
-            }).then(() => {
-                console.log(`Submitted: User ${userName}, Correct Labels: ${correctLabels}`);
-            }).catch(error => {
-                console.error("Error submitting correct labels:", error);
-            });
-        }
-
         function moveToNextReview() {
             currentReviewIndex++;  // Increment to move to the next review
             console.log("Current review index:", currentReviewIndex); // Debugging log
@@ -401,24 +417,15 @@
 
             // Update the progress bar
             const progressBar = document.getElementById('progressBar');
-            const progressValue = (currentReviewIndex / (reviewData.length-1)) * 100;
-            console.log("progress bar value: ", progressValue)
+            const progressValue = (currentReviewIndex / reviewData.length) * 100;
             progressBar.value = progressValue;  // Update progress bar value
             console.log(`Progress updated: ${progressValue}%`);
 
             // Check if there are more reviews to show
-            if (currentReviewIndex < reviewData.length-1) {
+            if (currentReviewIndex < reviewData.length) {
                 renderReviews(); // Render the next review
             } else {
-                document.getElementById('welcomeMessage').textContent = `Thank you, ${userName}! `;
-                // document.getElementById('reviewContent').innerHTML = "You have completed the challenge!</h2>";
-                document.getElementById('reviewContent').innerHTML = `
-                    <h2>You have completed the challenge!</h2>
-                    <p>You got ${correctLabels} correct labels.</p>
-                    <button onclick="window.location.href='https://sites.google.com/view/robot-radar'">View Leaderboard</button>
-                `;
-                submitCorrectLabelsForm();
-                
+                document.getElementById('reviewContent').innerHTML = "<h2>Thank you for completing the challenge!</h2>";
             }
         }
 
