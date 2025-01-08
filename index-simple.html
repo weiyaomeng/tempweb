@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fake or Fact: Who Has Got the Robot Radar</title>
+    <title>Fake or Fact: Who Has Got the GPT Radar</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <style>
         body {
@@ -187,14 +187,14 @@
 </head>
 <body>
     <div class="container" id="welcomeContainer">
-        <h1>Fake or Fact: Who Has Got the Robot Radar?</h1>
+        <h1>Fake or Fact: Who Has Got the GPT Radar?</h1>
         <p>Enter your name to start the challenge:</p>
         <input type="text" id="userName" placeholder="Your name" />
         <button onclick="startChallenge()">Start Challenge</button>
     </div>
 
     <div class="container hidden" id="reviewContainer">
-        <h1>Fake or Fact: Who Has Got the Robot Radar?</h1>
+        <h1>Fake or Fact: Who Has Got the GPT Radar?</h1>
         <h2 id="welcomeMessage"></h2>
         <p id="reviewDataLength"></p>
         <progress id="progressBar" value="0" max="100"></progress>
@@ -415,7 +415,7 @@
                 document.getElementById('reviewContent').innerHTML = `
                     <h2>You have completed the challenge!</h2>
                     <p>You got ${correctLabels} correct labels.</p>
-                    <button onclick="window.location.href='https://sites.google.com/view/robot-radar'">View Leaderboard</button>
+                    <button onclick="window.location.href='https://sites.google.com/view/gpt-radar'">View Leaderboard</button>
                 `;
                 submitCorrectLabelsForm();
                 
