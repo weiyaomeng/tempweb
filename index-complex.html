@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fake or Fact: Who Has Got the Robot Radar</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            color: #333; /* Set a global text color for better readability */
+        }
+
+        .container {
+            width: 80%;
+            max-width: 1200px; /* Prevents the container from becoming too wide on large screens */
+            margin: 40px auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1, h2 {
+            font-size: 2.5em;
+            color: #007bff;
+            margin-bottom: 20px;
+            font-weight: 600; /* Adds more emphasis to the titles */
+        }
+
+        .review-info .rating {
+            color: #ffc107;
+            margin-bottom: 15px;
+        }
+
+        .review-content {
+            display: flex;
+            justify-content: space-between; /* Spreads content to left and right */
+            margin-bottom: 30px;
+            text-align: left;
+        }
+
+        .product-info {
+            flex: 1; /* Take up space on the left */
+            padding-right: 20px; /* Space between product info and review */
+            text-align: left;
+        }
+
+        .review-info {
+            flex: 1.5; /* Take up more space on the right */
+            padding-left: 20px;
+        }
+
+        .product-info h3 {
+            font-size: 1.8em;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .product-info p {
+            font-size: 1.1em;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        .product-info img {
+            width: 100%;
+            max-width: 200px;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .review-info .review-title {
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-align: left;
+        }
+
+        .review-info .review-text {
+            font-size: 1.1em;
+            color: #444;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .review-info .helpful {
+            font-size: 1em;
+            color: #777;
+            text-align: left;
+        }
+
+
+        .classification {
+            margin-top: 20px;
+        }
+
+        .classification button {
+            padding: 12px 20px;
+            font-size: 18px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #28a745;
+            color: white;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            margin: 5px;
+            width: 150px;
+        }
+
+        .classification button.machine {
+            background-color: #dc3545;
+        }
+
+        .classification button:hover {
+            background-color: #218838;
+            transform: translateY(-2px);
+        }
+
+        .classification button.machine:hover {
+            background-color: #c82333;
+        }
+
+        /* Style the progress bar */
+        progress {
+            width: 100%; /* Full width */
+            height: 20px; /* Set the height of the bar */
+            border-radius: 10px; /* Rounded corners */
+            border: none; /* Remove default border */
+        }
+
+        /* Customize the color of the progress bar */
+        progress::-webkit-progress-bar {
+            background-color: #f3f3f3; /* Light grey background */
+            border-radius: 10px;
+        }
+
+        progress::-webkit-progress-value {
+            background-color: #28a745; /* Green color for progress */
+            border-radius: 10px;
+        }
+
+        /* For Firefox */
+        progress::-moz-progress-bar {
+            background-color: #28a745;
+            border-radius: 10px;
+        }
+
+        #reviewDataLength {
+            font-size: 1.2em;
+            color: #333;
+            margin-top: 20px;
+            font-weight: 600; /* Makes the review count stand out */
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Mobile-friendly adjustments */
+        @media (max-width: 768px) {
+            .review-content {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .product-info {
+                text-align: center;
+                margin-bottom: 20px;
+            }
+
+            .review-info {
+                padding-left: 0;
+            }
+
+            .classification button {
+                width: 100%; /* Makes buttons full-width on smaller screens */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="welcomeContainer">
+        <h1>Fake or Fact: Who Has Got the Robot Radar?</h1>
+        <h2>Level: Complex</h2>
+        <p>Enter your name to start the challenge:</p>
+        <input type="text" id="userName" placeholder="Your name" />
+        <button onclick="startChallenge()">Start Challenge</button>
+    </div>
+
+    <div class="container hidden" id="reviewContainer">
+        <h1>Fake or Fact: Who Has Got the Robot Radar?</h1>
+        <h2 id="welcomeMessage"></h2>
+        <p id="reviewDataLength"></p>
+        <progress id="progressBar" value="0" max="100"></progress>
+        <div id="reviewContent"></div>
+    </div>
+
+    <script>
+        let productData = [];
+        let reviewData = [];
+        let currentReviewIndex = 0;
+        let userName = "";
+        let correctLabels = 0; // Add counter for correct labels
+
+        function loadMetaData() {
+            console.log("Loading meta data...");
+            // Papa.parse("data/meta_with_images.csv", {
+            Papa.parse("data/data_metadata_more.csv", {
+                download: true,
+                header: true,
+                dynamicTyping: true,
+                complete: function(results) {
+                    productData = results.data;
+                    console.log("Meta Data Loaded:", productData);
+                    loadReviewData();
+                },
+                error: function(error) {
+                    console.error("Error loading meta data:", error);
+                }
+            });
+        }
+
+        function loadReviewData() {
+            console.log("Loading review data...");
+            // Papa.parse("data/review.csv", {
+            Papa.parse("data/ready_review_10.csv", {
+                download: true,
+                header: true,
+                dynamicTyping: true,
+                complete: function(results) {
+                    reviewData = results.data;
+                    console.log("Review Data Loaded:", reviewData);
+                    console.log("Number of reviews:", reviewData.length-1);
+                    // document.getElementById('reviewDataLength').textContent = `You will be reviewing ${reviewData.length} reviews.`;
+                    renderReviews();
+                },
+                error: function(error) {
+                    console.error("Error loading review data:", error);
+                }
+            });
+        }
+        // Ensure the images field is correctly formatted
+        function sanitizeImagesField(imagesField) {
+            if (typeof imagesField === 'string') {
+                try {
+                    // Try to parse the images field as JSON, if it fails, sanitize it
+                    // Ensure single quotes are replaced with double quotes for valid JSON
+                    let sanitizedField = imagesField.replace(/'/g, '"'); // Replace single quotes with double quotes
+                    return JSON.parse(sanitizedField);
+                } catch (e) {
+                    console.error('Error parsing images:', e);
+                    return []; // Return an empty array in case of an error
+                }
+            }
+            return imagesField || []; // Return the original value or an empty array if it's invalid
+        }
+
+        function renderReviews() {
+            const reviewContainer = document.getElementById('reviewContent');
+            console.log("Rendering review for index:", currentReviewIndex);
+
+            if (currentReviewIndex >= reviewData.length) {
+                console.error("Invalid index, no more reviews to render.");
+                return;
+            }
+
+            reviewContainer.innerHTML = ''; // Clear existing content
+            const review = reviewData[currentReviewIndex];
+            const product = productData.find(product => product.parent_asin === review.parent_asin);
+
+            if (!product) {
+                console.error("Product not found for review:", review);
+                return;
+            }
+
+            let featuresHTML = '';
+            if (product.features) {
+                if (typeof product.features === 'string') {
+                    try {
+                        featuresHTML = JSON.parse(product.features).map(feature => `<li>${feature}</li>`).join('');
+                    } catch (e) {
+                        featuresHTML = "<li>Invalid features format</li>";
+                    }
+                } else if (Array.isArray(product.features)) {
+                    featuresHTML = product.features.map(feature => `<li>${feature}</li>`).join('');
+                } else {
+                    featuresHTML = "<li>No features available</li>";
+                }
+            } else {
+                featuresHTML = "<li>No features available</li>";
+            }
+
+            const productImageUrl = product.image_url;
+            console.log("Product Image URL:", productImageUrl);
+
+            const reviewHTML = `
+                <div class="review">
+                    <!-- Container for Left and Right Layout -->
+                    <div class="review-content">
+                        <!-- Left Side: Product Info -->
+                        <div class="product-info">
+                            <!-- Product Title -->
+                            <div class="review-title">${product.title}</div>
+
+                            <!-- Product Price and Rating -->
+                            <p><strong>Price:</strong> £${product.price}</p>
+                            <p><strong>Rating:</strong> ${product.average_rating} (${product.rating_number} reviews)</p>
+
+                            <!-- Display Product Image -->
+                            <div class="product-image">
+                                <img src="${productImageUrl}" alt="${product.title}" style="width: 200px; height: auto;">
+                            </div>
+                        </div>
+
+                        <!-- Right Side: Review Content -->
+                        <div class="review-info">
+                            <div class="rating">${'★'.repeat(review.rating)}${'☆'.repeat(5 - review.rating)}</div>
+                            <div class="review-title">${review.title}</div>
+                            <div class="review-text">${review.text}</div>
+                            <div class="helpful">${review.helpful_vote} people found this helpful</div>
+
+                            <!-- Buttons for Classification -->
+                            <div class="classification">
+                                <button class="real" onclick="submitToForm('Real', '${review.id || review.parent_asin}', '${review.label}')">Real</button>
+                                <button class="machine" onclick="submitToForm('Machine-Generated', '${review.id || review.parent_asin}', '${review.label}')">Machine-Generated</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+
+
+            reviewContainer.innerHTML = reviewHTML;
+        }
+
+        function startChallenge() {
+            const input = document.getElementById('userName');
+            if (!input.value.trim()) {
+                alert("Please enter your name to start the challenge.");
+                return;
+            }
+            userName = input.value.trim();
+            document.getElementById('welcomeContainer').classList.add('hidden');
+            document.getElementById('reviewContainer').classList.remove('hidden');
+            // document.getElementById('welcomeMessage').textContent = `Welcome, ${userName}! Let's get started.`;
+            loadMetaData();
+        }
+
+        function submitToForm(decision, reviewId, label) {
+            if (decision === label) {
+                correctLabels++; // Increase the correct label count
+            }
+
+            const formURL = "https://docs.google.com/forms/u/0/d/e/1FAIpQLSeZgBXmWiO0uWRMH8IWu8XLfWcHvgORgoxWqDFBNLqydfG4lQ/formResponse";
+            const formData = new URLSearchParams();
+            formData.append("entry.745853156", reviewId);
+            formData.append("entry.1251691115", decision);
+            formData.append("entry.1531183392", userName);
+
+            fetch(formURL, {
+                method: "POST",
+                body: formData,
+                mode: "no-cors"
+            }).then(() => {
+                moveToNextReview();
+            }).catch(error => {
+                console.error("Error submitting form:", error);
+                alert("Failed to submit response. Please try again.");
+            });
+        }
+
+        function submitCorrectLabelsForm() {
+            const correctLabelsFormURL = "https://docs.google.com/forms/u/0/d/e/1FAIpQLSfBVd5BsznYEAaNKgMFnS0X1kJtwFdI_Jp1Ba5eFmRvY7qJJA/formResponse";
+            const formData = new URLSearchParams();
+            formData.append("entry.605519870", userName); // User's name
+            formData.append("entry.1592901990", correctLabels); // Correct labels count
+
+            fetch(correctLabelsFormURL, {
+                method: "POST",
+                body: formData,
+                mode: "no-cors"
+            }).then(() => {
+                console.log(`Submitted: User ${userName}, Correct Labels: ${correctLabels}`);
+            }).catch(error => {
+                console.error("Error submitting correct labels:", error);
+            });
+        }
+
+        function moveToNextReview() {
+            currentReviewIndex++;  // Increment to move to the next review
+            console.log("Current review index:", currentReviewIndex); // Debugging log
+
+            // Update the remaining reviews count dynamically
+            // document.getElementById('reviewDataLength').textContent = `You will be reviewing ${reviewData.length - currentReviewIndex} reviews.`;
+
+            // Update the progress bar
+            const progressBar = document.getElementById('progressBar');
+            const progressValue = (currentReviewIndex / (reviewData.length-1)) * 100;
+            console.log("progress bar value: ", progressValue)
+            progressBar.value = progressValue;  // Update progress bar value
+            console.log(`Progress updated: ${progressValue}%`);
+
+            // Check if there are more reviews to show
+            if (currentReviewIndex < reviewData.length-1) {
+                renderReviews(); // Render the next review
+            } else {
+                submitCorrectLabelsForm();
+                document.getElementById('welcomeMessage').textContent = `Thank you, ${userName}! `;
+                // document.getElementById('reviewContent').innerHTML = "You have completed the challenge!</h2>";
+                document.getElementById('reviewContent').innerHTML = `
+                    <h2>You have completed the challenge!</h2>
+                    <p>You got ${correctLabels} correct labels.</p>
+                    <button onclick="window.location.href='https://sites.google.com/view/robot-radar'">View Leaderboard</button>
+                `;
+            }
+        }
+
+    </script>
+</body>
+</html>
