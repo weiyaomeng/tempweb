@@ -226,11 +226,23 @@
 <body>
     <div class="container" id="welcomeContainer">
         <h1>Fake or Fact: Who Has Got the GPT Radar?</h1>
-        <h2>Level: Complex</h2>
-        <p>Enter your name to start the challenge:</p>
-        <input type="text" id="userName" placeholder="Your name" />
-        <button onclick="startChallenge()">Start Challenge</button>
+        <h2 style="font-size: 1.5em; color: #007bff; margin-bottom: 20px;">Level: Complex</h2>
+        <p style="margin-bottom: 20px; font-size: 1.2em; color: #555;">Enter your name to start the challenge:</p>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 15px; max-width: 400px; margin: 0 auto;">
+            <input 
+                type="text" 
+                id="userName" 
+                placeholder="Your name" 
+                style="width: 100%; padding: 12px; font-size: 1rem; border: 1px solid #ccc; border-radius: 5px;" 
+            />
+            <button 
+                onclick="startChallenge()" 
+                style="width: 100%; padding: 12px; font-size: 1.1rem; cursor: pointer; border: none; border-radius: 5px; background-color: #007bff; color: white; transition: background-color 0.3s ease;">
+                Start Challenge
+            </button>
+        </div>
     </div>
+    
 
     <div class="container hidden" id="reviewContainer">
         <h1>Fake or Fact: Who Has Got the GPT Radar?</h1>
