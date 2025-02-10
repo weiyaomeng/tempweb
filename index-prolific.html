@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fake or Fact: Who Has Got the GPT Radar</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    
+    <style>
+      body {
+          font-family: 'Arial', sans-serif;
+          background-color: #f8f9fa;
+          color: #333;
+          margin: 0;
+          padding: 0;
+      }
+
+      .container {
+          width: 80%;
+          max-width: 1200px;
+          margin: 40px auto;
+          background: #fff;
+          padding: 30px;
+          border-radius: 8px;
+          box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+          text-align: center;
+      }
+
+      h1, h2 {
+          font-size: 2.5em;
+          color: #007bff;
+          margin-bottom: 20px;
+          font-weight: 600;
+      }
+
+      .review-content {
+          display: flex;
+          justify-content: space-between;
+          margin-bottom: 30px;
+          text-align: left;
+      }
+
+      .product-info {
+          flex: 1;
+          padding-right: 20px;
+          text-align: left;
+      }
+
+      .review-info {
+          flex: 1.5;
+          padding-left: 20px;
+      }
+
+      .product-info h3 {
+          font-size: 1.8em;
+          color: #333;
+          margin-bottom: 10px;
+      }
+
+      .product-info p {
+          font-size: 1.1em;
+          color: #555;
+          margin-bottom: 15px;
+      }
+
+      .product-info img {
+          width: 100%;
+          max-width: 200px;
+          height: auto;
+          border-radius: 8px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .review-info .review-title {
+          font-size: 1.3em;
+          font-weight: bold;
+          margin-bottom: 10px;
+      }
+
+      .review-info .review-text {
+          font-size: 1.1em;
+          color: #444;
+          line-height: 1.6;
+          margin-bottom: 15px;
+      }
+
+      .review-info .helpful {
+          font-size: 1em;
+          color: #777;
+      }
+
+      .classification {
+          margin-top: 20px;
+          display: flex;
+          justify-content: center;
+          gap: 20px;
+      }
+
+      /* ✅ Fixed Button Styling */
+      button.real, button.fake {
+          font-size: 1.2em;
+          font-weight: bold;
+          padding: 12px 25px;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+          transition: 0.3s;
+      }
+
+      button.real {
+          background-color: #28a745;
+          color: white;
+      }
+
+      button.fake {
+          background-color: #dc3545;
+          color: white;
+      }
+
+      button.real:hover, button.fake:hover {
+          opacity: 0.8;
+      }
+
+      button.next {
+          font-size: 1.2em;
+          font-weight: bold;
+          padding: 12px 25px;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+          background-color: #007bff;
+          color: white;
+          transition: 0.3s;
+          margin-top: 20px;
+      }
+
+      button.next:hover {
+          opacity: 0.8;
+      }
+
+
+      /* ✅ Confidence Level Slider */
+      .confidence-level {
+          text-align: center;
+          margin-top: 20px;
+      }
+
+      .slider-container {
+          position: relative;
+          width: 100%;
+          max-width: 500px;
+          margin: auto;
+      }
+
+      input[type="range"] {
+          width: 100%;
+          margin: 10px 0;
+          position: relative;
+          z-index: 2;
+      }
+
+      .slider-ticks {
+          position: absolute;
+          width: 100%;
+          top: 35px;
+          display: flex;
+          justify-content: space-between;
+          font-size: 18px;
+          color: #555;
+      }
+
+      .slider-labels {
+          position: absolute;
+          width: 100%;
+          top: 50px;
+          display: flex;
+          justify-content: space-between;
+          font-size: 14px;
+          color: #555;
+      }
+
+      .slider-labels span, .slider-ticks span {
+          position: relative;
+          transform: translateX(-50%);
+          white-space: nowrap;
+      }
+
+      .hidden {
+          display: none;
+      }
+
+      /* Style the progress bar */
+      progress {
+          width: 100%; /* Full width */
+          height: 20px; /* Set the height of the bar */
+          border-radius: 10px; /* Rounded corners */
+          border: none; /* Remove default border */
+      }
+      /* Customize the color of the progress bar */
+      progress::-webkit-progress-bar {
+          background-color: #f3f3f3; /* Light grey background */
+          border-radius: 10px;
+      }
+
+      progress::-webkit-progress-value {
+          background-color: #28a745; /* Green color for progress */
+          border-radius: 10px;
+      }
+
+      /* For Firefox */
+      progress::-moz-progress-bar {
+          background-color: #28a745;
+          border-radius: 10px;
+      }
+
+      #reviewDataLength {
+          font-size: 1.2em;
+          color: #333;
+          margin-top: 20px;
+          font-weight: 600; /* Makes the review count stand out */
+      }
+
+      /* ✅ Mobile Responsive Fix */
+      @media (max-width: 768px) {
+          .review-content {
+              flex-direction: column;
+              align-items: center;
+          }
+
+          .product-info {
+              text-align: center;
+              margin-bottom: 20px;
+          }
+
+          .review-info {
+              padding-left: 0;
+          }
+
+          .classification {
+              flex-direction: column;
+          }
+
+          .classification button {
+              width: 100%;
+          }
+      }
+
+    </style>
+</head>
+<body>
+    <!-- Welcome Container -->
+    <div class="container" id="welcomeContainer">
+        <h1>Fake or Fact: Who Has Got the GPT Radar?</h1>
+        <h2 style="font-size: 1.5em; color: #007bff;margin-bottom: 20px;">Data Collection via Prolific</h2>
+        <p style="margin-bottom: 20px; font-size: 1.2em; color: #555;">Enter your Prolific ID to start the challenge:</p>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 15px; max-width: 400px; margin: 0 auto;">
+            <input 
+                type="text" 
+                id="userName" 
+                placeholder="Your Prolific ID" 
+                style="width: 100%; padding: 12px; font-size: 1rem; border: 1px solid #ccc; border-radius: 5px;" 
+            />
+            <button 
+                onclick="showInfoCollection()" 
+                style="width: 100%; padding: 12px; font-size: 1.1rem; cursor: pointer; border: none; border-radius: 5px; background-color: #007bff; color: white; transition: background-color 0.3s ease;">
+                Enter
+            </button>
+        </div>
+    </div>
+
+    <!-- Info Collection Container -->
+    <div class="container hidden" id="infoCollectionContainer">
+        <h1>Information Collection</h1>
+        <p>Please answer the following questions before proceeding:</p>
+        
+        <!-- Familiarity with LLMs -->
+        <label for="llmFamiliarity"><strong>1. How familiar are you with Large Language Models (LLMs)?</strong></label>
+        <div class="slider-container">
+            <input type="range" id="llmFamiliarity" class="slider" min="1" max="5" step="1" value="3" oninput="updateFamiliarityValue(this.value)">
+            <div class="slider-labels">
+                <span style="left: 0%">Never used</span>
+                <span style="left: 25%">Heard of it</span>
+                <span style="left: 50%">Occasionally used</span>
+                <span style="left: 75%">Regular user</span>
+                <span style="left: 100%">Use professionally</span>
+            </div>
+        </div>
+        <br><br>
+        <p><strong>Your selection:</strong> <span id="familiarityValue">Occasionally used</span></p>
+
+        <br><br>
+
+        <!-- Usage of LLMs -->
+        <label for="llmUsage"><strong>2. What do you use LLMs for?</strong></label><br>
+        <textarea id="llmUsage" placeholder="Enter your response here..." rows="4" cols="50"></textarea>
+
+        <br><br>
+        <!-- <button onclick="submitInfoToGoogleForm()">Start Review Task</button> -->
+        <button onclick="submitInfoCollection()">Start Review Task</button>
+    </div>
+
+    <!-- Instructions Container (Initially Hidden) -->
+    <div class="container hidden" id="instructionsContainer">
+        <h1>Instructions</h1>
+        
+        <section class="instructions">
+            <p style="text-align: left; max-width: 600px; margin: 20px auto; line-height: 1.6;">
+                You will be presented with one review at a time.
+            </p>
+            <p style="text-align: left; max-width: 600px; margin: 20px auto; line-height: 1.6;">
+                Your task is to decide whether the review is human-written (Real) or generated by GPT (Machine Generated). Additionally, you will indicate your confidence level in each decision.
+            </p>
+            <p style="text-align: left; max-width: 600px; margin: 20px auto; line-height: 1.6;">
+                <strong>Note:</strong> Refreshing or leaving the page will reset your progress, requiring you to start over. Please avoid refreshing or navigating away during the challenge.
+            </p>
+        </section>
+
+        <!-- <button onclick="dataReadyCheck()">Continue</button> -->
+        <button onclick="startReviewTask()">Continue</button>
+
+    </div>
+
+    <!-- Review Container -->
+    <div class="container hidden" id="reviewContainer">
+        <h1>Fake or Fact: Who Has Got the GPT Radar?</h1>
+        <h2 id="welcomeMessage"></h2>
+        <p id="reviewDataLength"></p>
+        <progress id="progressBar" value="0" max="100"></progress>
+        <div id="reviewContent"></div>
+        <p id="loadingMessage" class="hidden" style="font-size: 1.2em; color: #007bff;">Loading data... Please wait.</p>
+
+    </div>
+
+    <script>
+        let productData = [];
+        let reviewData = [];
+        let currentReviewIndex = 0;
+        let userName = "";
+        let correctLabels = 0;
+        let llmFamiliarity = 3;
+        let llmFamiliarityText = "Occasionally used";
+        let llmUsage = "";
+        let selectedDecision = "";
+        let selectedConfidence = "Moderately Confident"; // Default confidence level
+
+        /*Information collection part */
+        const familiarityLabels = {
+            "1": "Never used",
+            "2": "Heard of it",
+            "3": "Occasionally used",
+            "4": "Regular user",
+            "5": "Use professionally"
+        };
+
+        function updateFamiliarityValue(value) {
+            document.getElementById("familiarityValue").textContent = familiarityLabels[value];
+        }
+
+        function showInfoCollection() {
+            // dataLoad();
+            const input = document.getElementById('userName');
+            if (!input.value.trim()) {
+                alert("Please enter your Prolific ID to continue.");
+                return;
+            }
+            userName = input.value.trim();
+            document.getElementById('welcomeContainer').classList.add('hidden');
+            document.getElementById('infoCollectionContainer').classList.remove('hidden');
+            // dataLoad();
+        }
+
+        function submitInfoToGoogleForm(userName0, llmFamiliarityText0, llmUsage0) {
+            if (!userName0 || !llmFamiliarityText0 || !llmUsage0) {
+                alert("Please complete all fields before proceeding.");
+                return;
+            }
+            // Replace with your actual Google Form URL
+            const googleFormURL = "https://docs.google.com/forms/u/0/d/e/1FAIpQLSe9ki7B6M3fpShtphj1Qi5kKW6OPWV7PAqqrUBwde8JqX5lxQ/formResponse";
+            // Replace with actual entry IDs from your form
+            const formData = new URLSearchParams();
+            formData.append("entry.1044300960", userName0);        // Participant ID
+            formData.append("entry.2068983905", llmFamiliarityText0); // Familiarity Level
+            formData.append("entry.144535932", llmUsage0);        // Usage Purpose
+
+            // Send the data to Google Form
+            fetch(googleFormURL, {
+                method: "POST",
+                body: formData,
+                mode: "no-cors" // Ensures silent submission without CORS issues
+            }).then(() => {
+                console.log("Data submitted successfully!");
+            }).catch(error => {
+                console.error("Error submitting data:", error);
+                alert("Failed to submit data. Please try again.");
+            });
+        }
+
+        function submitInfoCollection() {
+            llmFamiliarity = document.getElementById('llmFamiliarity').value;
+            llmUsage = document.getElementById('llmUsage').value.trim();
+
+            if (!llmFamiliarity || !llmUsage) {
+                alert("Please complete both questions before proceeding.");
+                return;
+            }
+
+            llmFamiliarityText = document.getElementById("familiarityValue").textContent;
+            submitInfoToGoogleForm(userName, llmFamiliarityText, llmUsage);
+
+            // Hide info collection container, show review task
+            document.getElementById('welcomeMessage').textContent = `Welcome, ${userName}!`;
+            document.getElementById('infoCollectionContainer').classList.add('hidden');
+            document.getElementById('instructionsContainer').classList.remove('hidden');     
+            dataLoad();       
+        }
+
+        /* Instruction view*/
+        // function dataLoad() {
+        //     // Load both metadata and review data in parallel
+        //     Promise.all([
+        //         new Promise(resolve => google.script.run.withSuccessHandler((data) => {
+        //             processMetaData(data);
+        //             resolve();
+        //         }).getCSVData()),
+        //         new Promise(resolve => google.script.run.withSuccessHandler((data) => {
+        //             processReviewData(data);
+        //             resolve();
+        //         // }).getReviewData())
+        //         }).getUserReviewData(userName))
+        //     ]).then(() => {
+        //         dataReadyCheck(); // Start checking only after both data sets load
+        //     }).catch(error => {
+        //         console.error("Error loading data:", error);
+        //     });
+        // }
+        async function dataLoad() {
+            console.log("Fetching data for user:", userName);
+
+            // GitHub Raw URLs (Update with your actual GitHub username and repo)
+            const metaDataURL = "https://raw.githubusercontent.com/weiyaomeng/tempweb/main/data/data_metadata_more.csv";
+            const reviewDataURL = "https://raw.githubusercontent.com/weiyaomeng/tempweb/main/data-prolific/ready_review_10.csv";
+            try {
+                // Load both metadata and review data using Promise.all
+                const [metaResponse, reviewResponse] = await Promise.all([
+                    fetch(metaDataURL),
+                    fetch(reviewDataURL)
+                ]);
+
+                if (!metaResponse.ok || !reviewResponse.ok) {
+                    throw new Error("Failed to fetch one or more CSV files.");
+                }
+
+                // Convert responses to text (CSV format)
+                const metaCSV = await metaResponse.text();
+                const reviewCSV = await reviewResponse.text();
+
+                console.log("✅ Meta Data CSV Loaded:", metaCSV);
+                console.log("✅ Review Data CSV Loaded:", reviewCSV);
+
+                // Parse CSV data to JSON format using PapaParse
+                const metaData = Papa.parse(metaCSV, { header: true }).data;
+                const reviewData = Papa.parse(reviewCSV, { header: true }).data;
+
+                console.log("✅ Parsed Meta Data:", metaData);
+                console.log("✅ Parsed Review Data:", reviewData);
+
+                // Process the parsed data
+                processMetaData(metaData);
+                processReviewData(reviewData);
+
+                // Check if data is ready to be displayed
+                dataReadyCheck();
+            } catch (error) {
+                console.error("❌ Error loading data:", error);
+                document.getElementById("loadingMessage").innerText = "Error loading data. Please refresh and try again.";
+            }
+        }
+
+
+
+
+        function startReviewTask() {
+            // Hide instructions, show review section
+            document.getElementById('instructionsContainer').classList.add('hidden');
+            document.getElementById('reviewContainer').classList.remove('hidden');
+            // startReviewTask();
+            dataReadyCheck();
+        }
+
+        let metaDataLoaded = false;
+        let reviewDataLoaded = false;
+
+        function dataReadyCheck() {
+            // startReviewTask();
+            if (metaDataLoaded && reviewDataLoaded) {
+                document.getElementById("loadingMessage").classList.add("hidden"); // Hide the loading message
+                renderReviews(); // Render reviews once all data is ready
+            } else {
+                document.getElementById("loadingMessage").classList.remove("hidden"); // Show pending message
+                setTimeout(dataReadyCheck, 500); // Check again after 500ms
+            }
+        }
+
+
+        /* Review view-----important--Data part*/
+        /* Review view-----important-----load product info*/
+        // function loadMetaData() {
+        //     google.script.run.withSuccessHandler(processMetaData).getCSVData();
+        // }
+        function processMetaData(data) {
+            if (!data || data.length === 0) {
+                console.error("No metadata received.");
+                return;
+            }
+
+            console.log("Raw product data:", data); // Debugging
+
+            // Convert CSV data from array format to object format
+            const headers = data[0]; // First row as column headers
+            productData = data.slice(1).map(row => {
+                let obj = {};
+                headers.forEach((header, index) => {
+                    obj[header] = row[index]; // Assign values to keys
+                });
+                return obj;
+            });
+
+            console.log("Processed product data:", productData); // Debugging
+
+            // loadReviewData();
+            metaDataLoaded = true; // Mark metadata as loaded
+            // dataReadyCheck(); // Check if both data sets are ready
+        }
+
+
+        /* Review view-----important-----load product reviews*/
+        function processReviewData(data) {
+          if (!data || data.length === 0) {
+              console.error("No review data received.");
+              return;
+          }
+
+          console.log("Raw review data:", data);
+
+          // Convert CSV data to object format
+          const headers = data[0]; // First row as column headers
+          reviewData = data.slice(1).map(row => {
+              let obj = {};
+              headers.forEach((header, index) => {
+                  obj[header] = row[index]; // Assign values to keys
+              });
+              return obj;
+          });
+
+          console.log("Processed review data:", reviewData);
+
+          // renderReviews();
+          reviewDataLoaded = true; // Mark review data as loaded
+          // dataReadyCheck(); // Check if both data sets are ready
+        }
+
+
+        const confidenceLabels = {
+            "1": "Not Confident",
+            "2": "Slightly Confident",
+            "3": "Moderately Confident",
+            "4": "Confident",
+            "5": "Extremely Confident"
+        };
+
+        // Step 2: Update Confidence Level
+        function updateConfidenceLabel(value) {
+            selectedConfidence = confidenceLabels[value];
+            document.getElementById("confidenceLabel").textContent = selectedConfidence;
+            document.getElementById("nextButtonSection").classList.remove("hidden"); // Show Next button
+        }
+
+        function getSelectedConfidence() {
+            const confidenceRadios = document.querySelectorAll('input[name="confidenceLevel"]:checked');
+            return confidenceRadios.length > 0 ? confidenceRadios[0].value : "No Confidence Selected";
+        }
+
+        // Step 1: Select Fake or Real
+        // function selectDecision(decision) {
+        //     selectedDecision = decision;
+        //     document.getElementById("confidenceSection").classList.remove("hidden"); // Show confidence slider
+        // }
+        function selectDecision(decision) {
+            selectedDecision = decision;
+
+            // Display the selection to the user
+            document.getElementById("userSelection").innerHTML = `You selected: <strong>${decision}</strong>`;
+            document.getElementById("userSelection").classList.remove("hidden"); // Make sure it's visible
+
+            // Show confidence slider
+            document.getElementById("confidenceSection").classList.remove("hidden");
+        }
+
+        function renderReviews() {
+            const reviewContainer = document.getElementById('reviewContent');
+            console.log("Rendering review for index:", currentReviewIndex);
+
+            if (currentReviewIndex >= reviewData.length) {
+                console.error("Invalid index, no more reviews to render.");
+                return;
+            }
+
+            reviewContainer.innerHTML = ''; // Clear existing content
+            const review = reviewData[currentReviewIndex];
+            const product = productData.find(product => product.parent_asin === review.parent_asin);
+
+            if (!product) {
+                console.error("Product not found for review:", review);
+                return;
+            }
+
+            let featuresHTML = product.features 
+                ? Array.isArray(product.features) 
+                    ? product.features.map(feature => `<li>${feature}</li>`).join('')
+                    : `<li>${product.features}</li>` 
+                : "<li>No features available</li>";
+
+            const productImageUrl = product.image_url || "https://via.placeholder.com/200"; // Fallback image
+
+            const reviewHTML = `
+                <div class="review-content">
+                    <div class="product-info">
+                        <h3>${product.title}</h3>
+                        <p><strong>Price:</strong> £${product.price}</p>
+                        <p><strong>Rating:</strong> ${product.average_rating} (${product.rating_number} reviews)</p>
+                        <div class="product-image">
+                            <img src="${productImageUrl}" alt="${product.title}">
+                        </div>
+                    </div>
+
+                    <div class="review-info">
+                      <div class="rating">${'★'.repeat(review.rating)}${'☆'.repeat(5 - review.rating)}</div>
+                      <h3 class="review-title">${review.title}</h3>
+                      <p class="review-text">${review.text}</p>
+                      <p class="helpful">${review.helpful_vote} people found this helpful</p>
+
+                      <!-- Step 1: Select Fake or Real -->
+                      <div class="classification">
+                          <button class="real" onclick="selectDecision('Real')">Real</button>
+                          <button class="fake" onclick="selectDecision('Fake')">Fake</button>
+                      </div>
+                      <p id="userSelection" class="hidden" margin-top: 10px;"></p>
+
+                      <!-- Step 2: Confidence Level (Appears after selection) -->
+                      <div id="confidenceSection" class="hidden">
+                          <p><strong>Select your confidence level:</strong></p>
+                          <div class="slider-container">
+                              <input type="range" id="confidenceSlider" min="1" max="5" step="1" value="3" oninput="updateConfidenceLabel(this.value)">
+                              <div class="slider-ticks">
+                                  <span>|</span><span>|</span><span>|</span><span>|</span><span>|</span>
+                              </div>
+                              <div class="slider-labels">
+                                  <span>Not Confident</span>
+                                  <span>Slightly Confident</span>
+                                  <span>Moderately Confident</span>
+                                  <span>Confident</span>
+                                  <span>Extremely Confident</span>
+                              </div>
+                          </div>
+                          <br><br>
+                          <p><strong>Your selection:</strong> <span id="confidenceLabel">Moderately Confident</span></p>
+                      </div>
+
+                      <!-- Step 3: Next Button (Appears after confidence selection) -->
+                      <div id="nextButtonSection" class="hidden">
+                          <button class="next" onclick="submitReview('${review.id || review.parent_asin}', '${review.label}')">Next</button>
+                      </div>
+                    </div>
+                </div>
+            `;
+
+            reviewContainer.innerHTML = reviewHTML;
+        }
+
+
+        // Step 3: Submit Review & Move to Next
+        function submitReview(reviewId, label) {
+            if (!selectedDecision) {
+                alert("Please select whether the review is Fake or Real.");
+                return;
+            }
+
+            if (selectedDecision === label) {
+                correctLabels++; // Increase the correct label count
+            }
+
+            const formURL = "https://docs.google.com/forms/u/0/d/e/1FAIpQLScWK8afSc13-Na7AIH0Rf50Vw8x3H7M0IdIGHPQv8l5yWcZeQ/formResponse";
+            const formData = new URLSearchParams();
+            formData.append("entry.896362160", reviewId);
+            formData.append("entry.1473192954", selectedDecision);
+            formData.append("entry.634150305", userName);
+            formData.append("entry.941090218", selectedConfidence);
+
+            console.log("Submitting:", [...formData.entries()]);
+
+            fetch(formURL, {
+                method: "POST",
+                body: formData,
+                mode: "no-cors"
+            }).then(() => {
+                moveToNextReview();
+            }).catch(error => {
+                console.error("Error submitting form:", error);
+            });
+        }
+
+        function moveToNextReview() {
+            currentReviewIndex++;
+            // Update progress bar
+            const progressBar = document.getElementById('progressBar');
+            if (progressBar) {
+                const progressValue = Math.min((currentReviewIndex / reviewData.length) * 100, 100);
+                progressBar.value = progressValue; // Update progress bar
+                console.log(`Progress updated: ${progressValue}%`);
+            }
+
+            if (currentReviewIndex < reviewData.length) {
+                renderReviews();
+            } else {
+                // submitCorrectLabelsForm();
+                document.getElementById('welcomeMessage').textContent = `Thank you, ${userName}! `;
+                // document.getElementById('reviewContent').innerHTML = "You have completed the challenge!</h2>";
+                // document.getElementById('reviewContent').innerHTML = `
+                //     <h2>You have completed the challenge!</h2>
+                //     <p>You got ${correctLabels} correct labels.</p>
+                //     <button onclick="window.location.href='https://sites.google.com/view/gpt-radar'">View Leaderboard</button>
+                // `;
+                document.getElementById('reviewContent').innerHTML = `
+                    <h2>You have completed the challenge!</h2>
+                    <p>You got <strong>${correctLabels}</strong> out of <strong>${reviewData.length}</strong> correct!</p>
+
+                    <h3>We’d love to hear your feedback! (Optional) 😊</h3>
+                    <textarea id="feedbackText" placeholder="Enter your feedback here..." rows="4" cols="50" style="width: 100%; padding: 10px; font-size: 1rem; border: 1px solid #ccc; border-radius: 5px;"></textarea>
+
+                    <br><br>
+                    <button onclick="submitFeedback()" style="padding: 10px 20px; font-size: 1.1rem; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                        Submit Feedback
+                    </button>
+                `;
+                
+            }
+        }
+
+        function submitFeedback() {
+            const feedback = document.getElementById("feedbackText").value.trim();
+
+            if (!feedback) {
+                alert("Feedback is optional. You can skip this step!");
+                return;
+            }
+
+            const formURL = "https://docs.google.com/forms/u/0/d/e/1FAIpQLSfxqoCygfQNE4wSyiZ0LapfYrSKHTY3L0BwDuuIpS6unwPTbA/formResponse"; // Replace with actual Google Form URL
+            const formData = new URLSearchParams();
+            formData.append("entry.321797091", userName);
+            formData.append("entry.119719453", feedback); // Replace "entry.123456789" with the actual Google Forms entry ID
+
+            fetch(formURL, {
+                method: "POST",
+                body: formData,
+                mode: "no-cors"
+            }).then(() => {
+                alert("Thank you for your feedback! 😊");
+                document.getElementById("feedbackText").value = ""; // Clear the textarea after submission
+            }).catch(error => {
+                console.error("Error submitting feedback:", error);
+                alert("There was an issue submitting your feedback. Please try again.");
+            });
+        }
+
+
+
+    </script>
+</body>
+</html>
