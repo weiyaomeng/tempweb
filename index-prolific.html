@@ -466,7 +466,9 @@
 
                 // Process the parsed data
                 processMetaData(metaData);
-                processReviewData(reviewData);
+                // processReviewData(reviewData);
+                processReviewData_sample(reviewData);
+                
 
                 // Check if data is ready to be displayed
                 dataReadyCheck();
@@ -475,9 +477,6 @@
                 document.getElementById("loadingMessage").innerText = "Error loading data. Please refresh and try again.";
             }
         }
-
-
-
 
         function startReviewTask() {
             // Hide instructions, show review section
@@ -501,68 +500,159 @@
             }
         }
 
-
         /* Review view-----important--Data part*/
         /* Review view-----important-----load product info*/
-        // function loadMetaData() {
-        //     google.script.run.withSuccessHandler(processMetaData).getCSVData();
-        // }
         function processMetaData(data) {
             if (!data || data.length === 0) {
                 console.error("No metadata received.");
                 return;
             }
 
-            console.log("Raw product data:", data); // Debugging
+            console.log("Raw product data length:", data.length);
+            console.log("Raw product data sample:", data.slice(0, 3)); // Debugging
 
-            // Convert CSV data from array format to object format
-            // const headers = data[0]; // First row as column headers
-            const headers = Object.keys(data[0] || {}); // Extract headers safely
+            // Extract headers safely
+            const headers = Object.keys(data[0] || {});
+            console.log("Extracted headers:", headers); // Debugging headers
 
-            productData = data.slice(1).map(row => {
-                let obj = {};
-                headers.forEach((header, index) => {
-                    obj[header] = row[index]; // Assign values to keys
-                });
-                return obj;
+            // Ensure 'parent_asin' exists in the CSV headers
+            if (!headers.includes("parent_asin")) {
+                console.error("Error: 'parent_asin' column is missing in the product CSV data.");
+                return;
+            }
+
+            // Convert CSV data into an array of objects & ensure 'parent_asin' exists
+            productData = data.filter(row => row.parent_asin).map(row => {
+                return {
+                    parent_asin: row.parent_asin.trim(), // Ensure 'parent_asin' exists & trim spaces
+                    title: row.title ? row.title.trim() : "No Title",
+                    price: row.price ? parseFloat(row.price) : 0, // Ensure price is a valid number
+                    average_rating: row.average_rating ? parseFloat(row.average_rating) : "N/A",
+                    rating_number: row.rating_number ? parseInt(row.rating_number) : 0,
+                    image_url: row.image_url ? row.image_url.trim() : "https://via.placeholder.com/200",
+                    features: row.features ? row.features.trim() : "No features available"
+                };
             });
 
-            console.log("Processed product data:", productData); // Debugging
+            if (productData.length === 0) {
+                console.error("Error: No valid product data with 'parent_asin' found.");
+                return;
+            }
 
-            // loadReviewData();
+            console.log("Processed product data length:", productData.length);
+            console.log("Sample processed product data:", productData.slice(0, 3)); // Debugging
+
             metaDataLoaded = true; // Mark metadata as loaded
-            // dataReadyCheck(); // Check if both data sets are ready
         }
+
 
 
         /* Review view-----important-----load product reviews*/
         function processReviewData(data) {
-          if (!data || data.length === 0) {
-              console.error("No review data received.");
-              return;
-          }
+            if (!data || data.length === 0) {
+                console.error("No review data received.");
+                return;
+            }
 
-          console.log("Raw review data:", data);
+            console.log("Raw review data length:", data.length);
+            console.log("Raw review data sample:", data.slice(0, 3));
 
-          // Convert CSV data to object format
-        //   const headers = data[0]; // First row as column headers
-        const headers = Object.keys(data[0] || {}); // Extract headers safely
+            // Extract headers safely
+            const headers = Object.keys(data[0] || {});
+            console.log("Extracted headers:", headers);
 
-          reviewData = data.slice(1).map(row => {
-              let obj = {};
-              headers.forEach((header, index) => {
-                  obj[header] = row[index]; // Assign values to keys
-              });
-              return obj;
-          });
+            // Ensure 'parent_asin' and 'label' exist
+            if (!headers.includes("parent_asin") || !headers.includes("label")) {
+                console.error("Error: 'parent_asin' or 'label' column is missing in the data.");
+                return;
+            }
 
-          console.log("Processed review data:", reviewData);
+            // Convert and clean review data
+            reviewData = data.filter(row => row.parent_asin && row.text && row.label).map(row => {
+                return {
+                    parent_asin: row.parent_asin.trim(),
+                    text: row.text.trim(),
+                    title: row.title ? row.title.trim() : "No Title",
+                    rating: row.rating ? row.rating : "N/A",
+                    helpful_vote: row.helpful_vote ? row.helpful_vote : 0,
+                    label: row.label.trim().toLowerCase() // Store label safely
+                };
+            });
 
-          // renderReviews();
-          reviewDataLoaded = true; // Mark review data as loaded
-          // dataReadyCheck(); // Check if both data sets are ready
+            console.log("Processed review data length:", reviewData.length);
+            console.log("Sample processed review data:", reviewData.slice(0, 3));
+
+            reviewDataLoaded = true;
         }
 
+        function processReviewData_sample(data) {
+            if (!data || data.length === 0) {
+                console.error("No review data received.");
+                return;
+            }
+
+            console.log("Raw review data length:", data.length);
+            console.log("Raw review data sample:", data.slice(0, 3));
+
+            // Extract headers safely
+            const headers = Object.keys(data[0] || {});
+            console.log("Extracted headers:", headers);
+
+            // Ensure 'parent_asin' and 'label' exist
+            if (!headers.includes("parent_asin") || !headers.includes("label")) {
+                console.error("Error: 'parent_asin' or 'label' column is missing in the data.");
+                return;
+            }
+
+            // Convert and clean review data
+            let filteredData = data.filter(row => row.parent_asin && row.text && row.label).map(row => {
+                return {
+                    parent_asin: row.parent_asin.trim(),
+                    text: row.text.trim(),
+                    title: row.title ? row.title.trim() : "No Title",
+                    rating: row.rating ? row.rating : "N/A",
+                    helpful_vote: row.helpful_vote ? row.helpful_vote : 0,
+                    label: row.label.trim().toLowerCase() // Store label safely
+                };
+            });
+
+            console.log("Filtered review data length:", filteredData.length);
+            console.log("Sample filtered review data:", filteredData.slice(0, 3));
+
+            if (filteredData.length < 2) {
+                console.error("Not enough reviews to select two unique instances.");
+                return;
+            }
+
+            // Randomly select two unique reviews
+            let selectedReviews = getRandomReviews(filteredData, 2);
+
+            console.log("Randomly selected reviews:", selectedReviews);
+
+            reviewData = selectedReviews; // Store only the two selected reviews
+            reviewDataLoaded = true;
+        }
+
+        // Function to randomly select `count` unique reviews
+        function getRandomReviews(data, count) {
+            let indexes = new Set();
+            while (indexes.size < count) {
+                let randomIndex = Math.floor(Math.random() * data.length);
+                indexes.add(randomIndex);
+            }
+            return [...indexes].map(index => data[index]); // Convert indexes to actual review objects
+        }
+
+
+        // Helper function to get unique random indexes
+        function getRandomIndexes(max, count) {
+            let indexes = new Set();
+            while (indexes.size < count) {
+                let randomIndex = Math.floor(Math.random() * max);
+                indexes.add(randomIndex);
+            }
+            return [...indexes];
+        }
 
         const confidenceLabels = {
             "1": "Not Confident",
@@ -590,7 +680,7 @@
         //     document.getElementById("confidenceSection").classList.remove("hidden"); // Show confidence slider
         // }
         function selectDecision(decision) {
-            selectedDecision = decision;
+            selectedDecision = decision; console.log("User selected:", selectedDecision);
 
             // Display the selection to the user
             document.getElementById("userSelection").innerHTML = `You selected: <strong>${decision}</strong>`;
@@ -689,7 +779,10 @@
                 return;
             }
 
-            if (selectedDecision === label) {
+            console.log("Selected Decision:", selectedDecision);
+            console.log("Correct Label:", label);
+
+            if (selectedDecision.trim().toLowerCase() === label.trim().toLowerCase()) {
                 correctLabels++; // Increase the correct label count
             }
 
