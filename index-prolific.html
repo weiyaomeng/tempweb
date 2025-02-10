@@ -415,30 +415,12 @@
         }
 
         /* Instruction view*/
-        // function dataLoad() {
-        //     // Load both metadata and review data in parallel
-        //     Promise.all([
-        //         new Promise(resolve => google.script.run.withSuccessHandler((data) => {
-        //             processMetaData(data);
-        //             resolve();
-        //         }).getCSVData()),
-        //         new Promise(resolve => google.script.run.withSuccessHandler((data) => {
-        //             processReviewData(data);
-        //             resolve();
-        //         // }).getReviewData())
-        //         }).getUserReviewData(userName))
-        //     ]).then(() => {
-        //         dataReadyCheck(); // Start checking only after both data sets load
-        //     }).catch(error => {
-        //         console.error("Error loading data:", error);
-        //     });
-        // }
         async function dataLoad() {
             console.log("Fetching data for user:", userName);
 
             // GitHub Raw URLs (Update with your actual GitHub username and repo)
             const metaDataURL = "https://raw.githubusercontent.com/weiyaomeng/tempweb/main/data/data_metadata_more.csv";
-            const reviewDataURL = "https://raw.githubusercontent.com/weiyaomeng/tempweb/main/data-prolific/review_test_10.csv";
+            const reviewDataURL = "https://raw.githubusercontent.com/weiyaomeng/tempweb/main/data-prolific/review_test_100.csv";
             try {
                 // Load both metadata and review data using Promise.all
                 const [metaResponse, reviewResponse] = await Promise.all([
