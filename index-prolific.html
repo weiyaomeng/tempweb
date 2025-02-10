@@ -516,7 +516,9 @@
             console.log("Raw product data:", data); // Debugging
 
             // Convert CSV data from array format to object format
-            const headers = data[0]; // First row as column headers
+            // const headers = data[0]; // First row as column headers
+            const headers = Object.keys(data[0] || {}); // Extract headers safely
+
             productData = data.slice(1).map(row => {
                 let obj = {};
                 headers.forEach((header, index) => {
@@ -543,7 +545,9 @@
           console.log("Raw review data:", data);
 
           // Convert CSV data to object format
-          const headers = data[0]; // First row as column headers
+        //   const headers = data[0]; // First row as column headers
+        const headers = Object.keys(data[0] || {}); // Extract headers safely
+
           reviewData = data.slice(1).map(row => {
               let obj = {};
               headers.forEach((header, index) => {
